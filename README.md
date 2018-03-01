@@ -52,7 +52,14 @@ A3 b) IllegalMoveException ved oppstart
 
 A3 c) Det ser ut til at første retning som velges er EAST, så de beveger seg bare generelt østover og blir ikke mer effektive.
 
-A3 d) 
+A3 d) Fikset så Rabbits søker etter Carrots i possibleMoves, også laget en getPossibleMoves metode i Game. Laget også en metode i Game for å finne items på en bestemt location: getItems(ILocation loc)
+
+Bedre Gulrøtter:
+a) Selv om gulrøttene ikke forsvinner når helsen blir satt til 0, så har de ingen "næring" til kaninene. En Rabbit "konsumerer" en Carrots hp for å få liv selv.
+
+b) Det virker ikke. Items utfører ikke doTurn, det er det kun Actors som gjør. For å få til dette må vi gjøre om Carrots til Actors. (implements IActor)
+
+
 
 # Del B
 ## Svar på spørsmål

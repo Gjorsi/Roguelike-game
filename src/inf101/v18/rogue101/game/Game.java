@@ -191,6 +191,19 @@ public class Game implements IGame {
 				} else {
 					displayDebug("doTurn(): Hmm, this is a very strange actor: " + currentActor);
 				}
+				
+				//possibly add a new Carrot
+				A: if (random.nextInt(100) < 5) {
+					ILocation newCarrotLoc = map.getLocation(random.nextInt(getWidth()), random.nextInt(getHeight()));
+					if (map.canGo(newCarrotLoc)) {
+						for (IItem item : getItems(newCarrotLoc)) {
+							if (item instanceof Carrot)
+								break A;
+						}
+						map.add(newCarrotLoc, new Carrot());
+					}
+				}
+					
 			}
 		} while (numPlayers > 0); // we can safely repeat if we have players, since we'll return (and break out of
 									// the loop) once we hit the player

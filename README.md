@@ -23,7 +23,7 @@ Dette prosjektet inneholder [Semesteroppgave 1](SEM-1.md). Du kan også [lese op
 
 # Fyll inn egne svar/beskrivelse/kommentarer til prosjektet under
 * Levert av:   Carl August Gjørsvik (cgj008)
-* Del A: [ ] helt ferdig, [ ] delvis ferdig
+* Del A: [ ] helt ferdig, [X] delvis ferdig
 * Del B: [ ] helt ferdig, [ ] delvis ferdig
 * Del C: [ ] helt ferdig, [ ] delvis ferdig
 * [ ] hele semesteroppgaven er ferdig og klar til retting!
@@ -45,6 +45,14 @@ Den lager også en liste over mulige moves ved å "spørre" om cango i 4 retning
 
 A2 g) Game styrer spillet slik at det er kun en Rabbit som har sin turn av gangen, og hvilken Rabbit dette er ligger i currentActor, Game har også
 currentLocation slik at vi vet hvor currentActor er når den "spør"
+
+A3 a) Ved å øke Rabbit maxHealth, lever de lenger, og dermed får de spist opp fler gulrøtter før de dør ut
+
+A3 b) IllegalMoveException ved oppstart
+
+A3 c) Det ser ut til at første retning som velges er EAST, så de beveger seg bare generelt østover og blir ikke mer effektive.
+
+A3 d) 
 
 # Del B
 ## Svar på spørsmål

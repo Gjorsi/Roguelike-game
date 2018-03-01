@@ -330,6 +330,11 @@ public class Game implements IGame {
 	public List<IItem> getLocalItems() {
 		return map.getItems(currentLocation);
 	}
+	
+	@Override
+	public List<IItem> getItems(ILocation loc) {
+		return map.getItems(loc);
+	}
 
 	@Override
 	public ILocation getLocation() {
@@ -356,8 +361,17 @@ public class Game implements IGame {
 
 	@Override
 	public List<GridDirection> getPossibleMoves() {
-		// TODO
-		throw new UnsupportedOperationException();
+		
+		List<GridDirection> possibleMoves = new ArrayList<>();
+		
+		for (GridDirection dir : GridDirection.FOUR_DIRECTIONS) {
+			if (map.canGo(currentLocation, dir))
+				possibleMoves.add(dir);
+		}
+		
+		return possibleMoves;
+		
+//		throw new UnsupportedOperationException();
 	}
 
 	@Override

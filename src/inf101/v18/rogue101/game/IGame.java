@@ -7,6 +7,7 @@ import inf101.v18.gfx.gfxmode.ITurtle;
 import inf101.v18.gfx.textmode.Printer;
 import inf101.v18.grid.GridDirection;
 import inf101.v18.grid.ILocation;
+import inf101.v18.rogue101.examples.Carrot;
 import inf101.v18.rogue101.map.IMapView;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.IActor;
@@ -317,4 +318,6 @@ public interface IGame {
 	 * @return A random generator
 	 */
 	Random getRandom();
+
+	List<IItem> getItems(ILocation loc);
 }

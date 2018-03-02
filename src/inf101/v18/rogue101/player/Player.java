@@ -1,22 +1,42 @@
 /**
  * 
  */
-package inf101.v18.rogue101.examples;
+package inf101.v18.rogue101.player;
 
 import inf101.v18.rogue101.game.IGame;
 import inf101.v18.rogue101.objects.IItem;
+import inf101.v18.rogue101.objects.IPlayer;
+import javafx.scene.input.KeyCode;
 
 /**
  * @author Carl
  *
  */
-public class Mushroom implements IItem {
+public class Player implements IPlayer {
 
 	/**
 	 * 
 	 */
-	public Mushroom() {
+	public Player() {
 		// TODO Auto-generated constructor stub
+	}
+
+	/* (non-Javadoc)
+	 * @see inf101.v18.rogue101.objects.IActor#getAttack()
+	 */
+	@Override
+	public int getAttack() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see inf101.v18.rogue101.objects.IActor#getDamage()
+	 */
+	@Override
+	public int getDamage() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	/* (non-Javadoc)
@@ -69,7 +89,8 @@ public class Mushroom implements IItem {
 	 */
 	@Override
 	public String getSymbol() {
-		return "M";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -79,6 +100,15 @@ public class Mushroom implements IItem {
 	public int handleDamage(IGame game, IItem source, int amount) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see inf101.v18.rogue101.objects.IPlayer#keyPressed(inf101.v18.rogue101.game.IGame, javafx.scene.input.KeyCode)
+	 */
+	@Override
+	public void keyPressed(IGame game, KeyCode key) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

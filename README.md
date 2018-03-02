@@ -59,7 +59,7 @@ a) Selv om gulrøttene ikke forsvinner når helsen blir satt til 0, så har de i
 
 b) Det virker ikke. Items utfører ikke doTurn, det er det kun Actors som gjør. For å få til dette må vi gjøre om Carrots til Actors. (implements IActor)
 
-
+B2 f) Får ikke kjørt tester på Player class pga "internal graphics not initialized" bug. 
 
 # Del B
 ## Svar på spørsmål

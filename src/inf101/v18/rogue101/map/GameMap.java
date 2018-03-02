@@ -55,7 +55,17 @@ public class GameMap implements IGameMap {
 
 		// do the actual adding
 		List<IItem> list = grid.get(loc);
-		list.add(item);
+		
+		// finds first smaller item in list, and inserts at that point
+		// if no smaller item is found, insert at end
+		for (int i=0; i<list.size(); i++) {
+			if (list.get(i).compareTo(item) < 0) {
+				list.add(i, item);
+				return;
+			}
+		}
+		
+		list.add(list.size(), item);
 		// TODO: should be sorted!
 	}
 

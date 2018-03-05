@@ -143,7 +143,7 @@ public class Player implements IPlayer {
 			dropItem(game);
 			break;
 		case I:
-			displayInventory();
+			displayInventory(game);
 			break;
 		default:
 			break;
@@ -166,18 +166,24 @@ public class Player implements IPlayer {
 		
 	}
 
-	private void displayInventory() {
-		String[] s = new String[2];
+	private void displayInventory(IGame game) {
+		
+//		game.getPrinter().moveTo(1, 23);
+//		game.getPrinter().print("TEST TEST");
+		
+		
+		String[] s = new String[Math.max(2, pItems.size()+1)];
 		s[0] = "Inventory:";
-		s[1] = "";
 		
 		if (pItems.size()>0) {
-			for (int i=0;i<pItems.size();i++) {
-				s[1] += String.format("%d - %s || ", i+1, pItems.get(i).getName());
+			for (int i=1;i<pItems.size()+1;i++) {
+				s[i] = String.format("%d - %s", i, pItems.get(i-1).getName());
 			}
 		} else {
 			s[1] = "Empty.";
 		}
+		
+		game.displayOptions(s);
 		
 	}
 

@@ -311,12 +311,17 @@ public class Game implements IGame {
 	
 	@Override
 	public void displayOptions(String[] s) {
-		printer.clearLine(Main.LINE_MSG2);
-		printer.clearLine(Main.LINE_MSG3);
-		printer.printAt(1, Main.LINE_STATUS, s[0]);
-		printer.printAt(1, Main.LINE_STATUS, s[1]);
+		
+		printer.clearLine(1);
+		printer.printAt(41, 1, s[0]);
 		System.out.println("OptionsHeader: «" + s[0] + "»");
-		System.out.println("Options: «" + s[1] + "»");
+		
+		for (int i=1;i<s.length && i<19;i++) {
+			printer.clearLine(i+1);
+			printer.printAt(41, i+1, s[i]);
+			System.out.println("Options: «" + s[i] + "»");
+		}
+		
 		
 	}
 

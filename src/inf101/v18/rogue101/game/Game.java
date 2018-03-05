@@ -308,6 +308,17 @@ public class Game implements IGame {
 		printer.printAt(1, Main.LINE_STATUS, s);
 		System.out.println("Status: «" + s + "»");
 	}
+	
+	@Override
+	public void displayOptions(String[] s) {
+		printer.clearLine(Main.LINE_MSG2);
+		printer.clearLine(Main.LINE_MSG3);
+		printer.printAt(1, Main.LINE_STATUS, s[0]);
+		printer.printAt(1, Main.LINE_STATUS, s[1]);
+		System.out.println("OptionsHeader: «" + s[0] + "»");
+		System.out.println("Options: «" + s[1] + "»");
+		
+	}
 
 	public void draw() {
 		map.draw(painter, printer);
@@ -427,12 +438,21 @@ public class Game implements IGame {
 	@Override
 	public IItem pickUp(IItem item) {
 		if (item != null && map.has(currentLocation, item)) {
+			
+			if (currentActor.getAttack() >= item.getDefence()) {
+				map.remove(currentLocation, item);
+				return item;
+			} else {
+				displayMessage("You can't pick that up. Maybe you're not strong enough.");
+				return null;
+			}
+			
 			// TODO: bruk getAttack()/getDefence() til å avgjøre om man får til å plukke opp
 			// tingen
 			// evt.: en IActor kan bare plukkes opp hvis den har få/ingen helsepoeng igjen
-			map.remove(currentLocation, item);
-			return item;
+			
 		} else {
+			displayMessage("There's nothing there.");
 			return null;
 		}
 	}

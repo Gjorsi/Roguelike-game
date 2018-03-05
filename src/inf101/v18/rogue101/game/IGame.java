@@ -320,4 +320,6 @@ public interface IGame {
 	Random getRandom();
 
 	List<IItem> getItems(ILocation loc);
+
+	void displayOptions(String[] s);
 }

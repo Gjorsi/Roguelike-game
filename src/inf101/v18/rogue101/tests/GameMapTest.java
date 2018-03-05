@@ -41,7 +41,5 @@ class GameMapTest {
 			assertTrue(items.get(i).compareTo(items.get(i+1)) >= 0);
 		}
 		
-		
 	}
-
 }

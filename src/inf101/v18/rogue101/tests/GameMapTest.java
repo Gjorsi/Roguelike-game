@@ -40,6 +40,42 @@ class GameMapTest {
 		for (int i=0;i<items.size()-1;i++) {
 			assertTrue(items.get(i).compareTo(items.get(i+1)) >= 0);
 		}
+	}
+	
+	@Test
+	void testGameMapVisibility() {
+		GameMap gameMap = new GameMap(20, 20);
+		
+		// test that no positions outside distance are included
+		ILocation centre = gameMap.getLocation(10, 10);
+		List<ILocation> centreNeighbours = gameMap.getNeighbourhood(centre, 4);
+		for (ILocation loc : centreNeighbours) {
+			assertTrue(centre.gridDistanceTo(loc) <= 4);
+		}
+		
+		// test that no positions outside distance are included when dist is 1
+		List<ILocation> centreNeighbours1 = gameMap.getNeighbourhood(centre, 1);
+		for (ILocation loc : centreNeighbours1) {
+			assertTrue(centre.gridDistanceTo(loc) <= 1);
+		}
+		
+		// test that number of neighbours in distance 1 from centre is 8
+		assertTrue(centreNeighbours1.size() == 8);
+		
+		// test that number of neighbours in distance 3 from corner is 15
+		ILocation corner = gameMap.getLocation(19, 19);
+		List<ILocation> cornerNeighbours = gameMap.getNeighbourhood(corner, 3);
+		assertTrue(cornerNeighbours.size() == 15);
+		
+		// test that number of neighbours in distance 2 from edge is 14
+		ILocation edge = gameMap.getLocation(19, 10);
+		List<ILocation> edgeNeighbours = gameMap.getNeighbourhood(edge, 2);
+		assertTrue(edgeNeighbours.size() == 14);
+		
+		// test that the list of neighbours are sorted in order of increasing distance from centre
+		for (int i=0; i<centreNeighbours.size()-1; i++) {
+			assertTrue(centreNeighbours.get(i).gridDistanceTo(centre) <= centreNeighbours.get(i+1).gridDistanceTo(centre));
+		}
 		
 	}
 }

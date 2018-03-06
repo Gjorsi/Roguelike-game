@@ -90,6 +90,10 @@ Hvis det er flere mulige, blir game.options satt til true og currentOpt satt til
 game.displayOptions lister valgmuligheter og spillet venter nå på input av valg
 * Når input av valg er akseptert, kalles drop eller pickUp i Player, og game.options blir satt til false, slik at spillet fortsetter som normalt.
 
+B5 a-d) OK
+* Finner alle neighbours innen distance med nøstede for-loops som sjekker et kvadrat 2*distance+1 sentrert på location, men unngår å telle med location, og unngår å telle ruter utenfor grid
+* Sorterer locations funnet ved en ny metode: GameMap.sortNeighbourhood (insertion sort algoritme)
+
 #TODO: begrense antall items per loc og i inventory til 10
 
 # Del C

@@ -260,16 +260,36 @@ public class GameMap implements IGameMap {
 
 		List<ILocation> locs = new ArrayList<>();
 		
-		for (int x=loc.getX()-dist;x<loc.getX()+dist;x++) {
-			for (int y=loc.getY()-dist;y<loc.getY()+dist;y++) {
+		for (int x=loc.getX()-dist; x<=loc.getX()+dist && x<grid.getWidth(); x++) {
+			for (int y=loc.getY()-dist; y<=loc.getY()+dist && y<grid.getHeight(); y++) {
 				if (!(x == loc.getX() && y == loc.getY())) {
 					locs.add(getLocation(x, y));
 				}
 			}
 		}
 		
+		if (dist > 1) 
+			locs = sortNeighbourhood(locs, loc);
+		
 		return locs;
 //		throw new UnsupportedOperationException();
+	}
+
+	private List<ILocation> sortNeighbourhood(List<ILocation> locs, ILocation loc) {
+		List<ILocation> sortedLocs = new ArrayList<>();
+		sortedLocs.add(locs.get(0));
+		
+		// insertion sort algorithm based on the locations' distances to loc
+		for (int i=1; i<locs.size(); i++) {
+			A: for (int j=0; j<sortedLocs.size(); j++) {
+				if (locs.get(i).gridDistanceTo(loc) <= sortedLocs.get(j).gridDistanceTo(loc)) {
+					sortedLocs.add(j, locs.get(i));
+					break A;
+				}
+			}
+		}
+		
+		return sortedLocs;
 	}
 }
 

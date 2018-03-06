@@ -258,7 +258,28 @@ public class GameMap implements IGameMap {
 		else if (dist == 0)
 			return new ArrayList<>(); // empty!
 
-		// TODO: implement this!
-		throw new UnsupportedOperationException();
+		List<ILocation> locs = new ArrayList<>();
+		
+		for (int x=loc.getX()-dist;x<loc.getX()+dist;x++) {
+			for (int y=loc.getY()-dist;y<loc.getY()+dist;y++) {
+				if (!(x == loc.getX() && y == loc.getY())) {
+					locs.add(getLocation(x, y));
+				}
+			}
+		}
+		
+		return locs;
+//		throw new UnsupportedOperationException();
 	}
 }
+
+
+
+
+
+
+
+
+
+
+

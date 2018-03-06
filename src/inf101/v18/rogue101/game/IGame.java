@@ -3,6 +3,7 @@ package inf101.v18.rogue101.game;
 import java.util.List;
 import java.util.Random;
 
+import inf101.v18.gfx.Screen;
 import inf101.v18.gfx.gfxmode.ITurtle;
 import inf101.v18.gfx.textmode.Printer;
 import inf101.v18.grid.GridDirection;
@@ -319,7 +320,38 @@ public interface IGame {
 	 */
 	Random getRandom();
 
+	/**
+	 * Get list of items at specific location
+	 * 
+	 * @param loc
+	 * location of where user wants item list from
+	 * @return List of Iitems at loc
+	 */
 	List<IItem> getItems(ILocation loc);
 
+	/**
+	 * Displays string array given on the right side of game map, up to 19 lines
+	 * 
+	 * @param s
+	 * String array, to be displayed
+	 */
 	void displayOptions(String[] s);
+
+	/**
+	 * Get status of game; whether it is in an options menu or regular play
+	 * 
+	 * @return boolean, true if in menu
+	 */
+	boolean getOptions();
+
+	/**
+	 * Change to menu state or back to regular play state 
+	 */
+	void changeOptions();
+
+	/**
+	 * Clear message lines (not status line)
+	 */
+	void clearMessages();
+
 }

@@ -59,11 +59,28 @@ a) Selv om gulrøttene ikke forsvinner når helsen blir satt til 0, så har de i
 
 b) Det virker ikke. Items utfører ikke doTurn, det er det kun Actors som gjør. For å få til dette må vi gjøre om Carrots til Actors. (implements IActor)
 
-B2 f) Får ikke kjørt tester på Player class pga "internal graphics not initialized" bug. 
-
 # Del B
 ## Svar på spørsmål
-* ...
+
+B1 a-d) OK - den nye klassen heter Mushroom (i examples-pakken)
+
+B2 a-e) OK
+
+B2 f) Får ikke kjørt tester på Player class pga "internal graphics not initialized" bug. 
+
+B3 a-c) Implementert, GameMapTest legger inn 20 tilfeldige items og tester at alle ligger i rekkefølge.
+
+B4 a) Implementert pickUp og drop henholdsvis med tastene 'E' og 'C'
+
+B4 b) OK
+
+B4 c) Implementert pItems liste i Player class, holder oversikt over items som er plukket opp.
+
+B4 d) Har laget en displayOptions metode i game som kan vise et String array opptil 19 linjer. 
+Denne brukes av Player.displayInventory (tast 'I') til å vise innholdet av pItems-listen
+
+B4 div: 
+
 
 # Del C
 ## Oversikt over designvalg og hva du har gjort

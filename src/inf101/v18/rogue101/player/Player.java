@@ -3,13 +3,16 @@
  */
 package inf101.v18.rogue101.player;
 
+import java.awt.Event;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import inf101.v18.grid.GridDirection;
 import inf101.v18.rogue101.game.IGame;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.IPlayer;
+import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -23,6 +26,10 @@ public class Player implements IPlayer {
 	private int health;
 	private int maxHealth;
 	private List<IItem> pItems;
+	private int nOptions;
+	private boolean accepted;
+	private enum opt {pickUp, drop};
+	private opt currentOpt;
 	
 	/**
 	 * 
@@ -32,6 +39,8 @@ public class Player implements IPlayer {
 		this.health = 100;
 		this.name = "Gange-Rolf";
 		this.pItems = new ArrayList<>();
+		this.nOptions = 0;
+		this.accepted = false;
 		
 	}
 
@@ -123,39 +132,80 @@ public class Player implements IPlayer {
 	@Override
 	public void keyPressed(IGame game, KeyCode key) {
 		
-		switch (key) {
-		case LEFT:
-			tryToMove(game, GridDirection.WEST);
-			break;
-		case RIGHT:
-			tryToMove(game, GridDirection.EAST);
-			break;
-		case UP:
-			tryToMove(game, GridDirection.NORTH);
-			break;
-		case DOWN:
-			tryToMove(game, GridDirection.SOUTH);
-			break;
-		case R:
-			tryPickUp(game);
-			break;
-		case F:
-			dropItem(game);
-			break;
-		case I:
-			displayInventory(game);
-			break;
-		default:
-			break;
+		if (!game.getOptions()) {
+			switch (key) {
+			case LEFT:
+				tryToMove(game, GridDirection.WEST);
+				break;
+			case RIGHT:
+				tryToMove(game, GridDirection.EAST);
+				break;
+			case UP:
+				tryToMove(game, GridDirection.NORTH);
+				break;
+			case DOWN:
+				tryToMove(game, GridDirection.SOUTH);
+				break;
+			case E:
+				tryPickUp(game);
+				break;
+			case C:
+				tryDropItem(game);
+				break;
+			case I:
+				displayInventory(game);
+				break;
+			default:
+				break;
+			}
+			
+			showStatus(game);
+		} else {
+			if (key.isDigitKey()) {
+				int digit = Integer.parseInt(Character.toString(key.toString().charAt(key.toString().length()-1)));
+				
+				if (digit > 0 && digit <= nOptions) {
+					switch (currentOpt) {
+					case drop:
+						dropItem(game, digit-1);
+						game.clearMessages();
+						break;
+					case pickUp:
+						pickUp(game, digit-1);
+						game.clearMessages();
+						break;
+					default:
+						break;
+					}
+				} else {
+					game.displayMessage("Enter number in range 1 - " + nOptions);
+				}
+			} else {
+				game.displayMessage("Enter number in range 1 - " + nOptions);
+			}
+			
+
 		}
 		
-		showStatus(game);
 
 	}
 
-	private void dropItem(IGame game) {
+	private void tryDropItem(IGame game) {
 		
 		if (pItems.size()>1) {
+			
+			String itemOptions[] = new String[pItems.size()+1];
+			itemOptions[0] = "Choose item to drop:";
+			
+			for (int i=0;i<pItems.size();i++) {
+				itemOptions[i+1] = String.format("%d - %s", i+1, pItems.get(i).getName());
+			}
+			
+			game.displayOptions(itemOptions);
+			
+			game.changeOptions();
+			nOptions = pItems.size();
+			currentOpt = opt.drop;
 			
 		} else if (pItems.size() == 1) {
 			game.addItem(pItems.get(0));
@@ -164,6 +214,12 @@ public class Player implements IPlayer {
 			game.displayMessage("You have nothing to drop.");
 		}
 		
+	}
+	
+	private void dropItem(IGame game, int n) {
+		game.drop(pItems.get(n));
+		pItems.remove(n);
+		game.changeOptions();
 	}
 
 	private void displayInventory(IGame game) {
@@ -189,11 +245,9 @@ public class Player implements IPlayer {
 
 	private void tryPickUp(IGame game) {
 		List<IItem> availableItems = game.getLocalItems();
-		
-		String itemOptions[] = new String[2];
+		String itemOptions[] = new String[availableItems.size()+1];
 				
 		itemOptions[0] = "Choose item to attempt to pick up:";
-		itemOptions[1] = "";
 		
 		if (availableItems.size() == 1) {
 			pItems.add(game.pickUp(availableItems.get(0)));
@@ -201,24 +255,33 @@ public class Player implements IPlayer {
 		} else if (availableItems.size() > 1){
 			
 			for (int i=0;i<availableItems.size();i++) {
-				itemOptions[1] += String.format("%d - %s \n", i+1, availableItems.get(i).getName());
+				itemOptions[i+1] = String.format("%d - %s", i+1, availableItems.get(i).getName());
 			}
 			
-			
-			
 			game.displayOptions(itemOptions);
+			
+			currentOpt = opt.pickUp;
+			nOptions = availableItems.size();
+			game.changeOptions();
 			
 		} else {
 			game.displayMessage("No item found.");
 		}
 		
 	}
+	
+	private void pickUp(IGame game, int n) {
+		List<IItem> availableItems = game.getLocalItems();
+		pItems.add(game.pickUp(availableItems.get(n)));
+		game.changeOptions();
+	}
 
 	private void tryToMove(IGame game, GridDirection dir) {
 		
-		if (game.canGo(dir))
+		if (game.canGo(dir)) {
+			game.clearMessages();
 			game.move(dir);
-		else
+		} else
 			game.displayMessage("Nope.");
 	}
 

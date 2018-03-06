@@ -33,6 +33,7 @@ import inf101.v18.rogue101.objects.Wall;
 import inf101.v18.rogue101.player.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 public class Game implements IGame {
@@ -60,10 +61,14 @@ public class Game implements IGame {
 	private final ITurtle painter;
 	private final Printer printer;
 	private int numPlayers = 0;
+	private Screen gScreen;
+	private boolean options;
 
 	public Game(Screen screen, ITurtle painter, Printer printer) {
 		this.painter = painter;
 		this.printer = printer;
+		this.gScreen = screen;
+		this.options = false;
 
 		// TODO: (*very* optional) for advanced factory technique, use
 		// something like "itemFactories.put("R", () -> new Rabbit());"
@@ -103,7 +108,7 @@ public class Game implements IGame {
 			}
 		}
 	}
-
+	
 	@Override
 	public void addItem(IItem item) {
 		map.add(currentLocation, item);
@@ -313,16 +318,26 @@ public class Game implements IGame {
 	public void displayOptions(String[] s) {
 		
 		printer.clearLine(1);
+		for (int i=2;i<20;i++) {
+			printer.clearLine(i);
+		}
+		
 		printer.printAt(41, 1, s[0]);
 		System.out.println("OptionsHeader: «" + s[0] + "»");
 		
 		for (int i=1;i<s.length && i<19;i++) {
-			printer.clearLine(i+1);
 			printer.printAt(41, i+1, s[i]);
 			System.out.println("Options: «" + s[i] + "»");
 		}
 		
 		
+	}
+	
+	public void clearMessages() {
+		for (int i=1;i<20;i++) {
+			printer.clearLine(i);
+		}
+		printer.clearLine(Main.LINE_MSG1);
 	}
 
 	public void draw() {
@@ -418,12 +433,21 @@ public class Game implements IGame {
 		return map.getWidth();
 	}
 
+	
+	public boolean getOptions() {
+		return options;
+	}
+	
+	public void changeOptions() {
+		options = !options;
+	}
+	
 	public void keyPressed(KeyCode code) {
 		// only an IPlayer/human can handle keypresses, and only if it's the human's
 		// turn
 		if (currentActor instanceof IPlayer) {
 			((IPlayer) currentActor).keyPressed(this, code); // do your thing
-			if (movePoints <= 0)
+			if (movePoints <= 0 && !options)
 				doTurn(); // proceed with turn if we're out of moves
 		}
 	}

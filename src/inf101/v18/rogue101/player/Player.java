@@ -27,7 +27,6 @@ public class Player implements IPlayer {
 	private int maxHealth;
 	private List<IItem> pItems;
 	private int nOptions;
-	private boolean accepted;
 	private enum opt {pickUp, drop};
 	private opt currentOpt;
 	
@@ -40,7 +39,6 @@ public class Player implements IPlayer {
 		this.name = "Gange-Rolf";
 		this.pItems = new ArrayList<>();
 		this.nOptions = 0;
-		this.accepted = false;
 		
 	}
 
@@ -150,7 +148,7 @@ public class Player implements IPlayer {
 				tryPickUp(game);
 				break;
 			case C:
-				tryDropItem(game);
+				tryDrop(game);
 				break;
 			case I:
 				displayInventory(game);
@@ -162,6 +160,8 @@ public class Player implements IPlayer {
 			showStatus(game);
 		} else {
 			if (key.isDigitKey()) {
+				
+				//key.tostring() returns "DIGIT1" etc, so needs some work to get an integer
 				int digit = Integer.parseInt(Character.toString(key.toString().charAt(key.toString().length()-1)));
 				
 				if (digit > 0 && digit <= nOptions) {
@@ -190,7 +190,7 @@ public class Player implements IPlayer {
 
 	}
 
-	private void tryDropItem(IGame game) {
+	private void tryDrop(IGame game) {
 		
 		if (pItems.size()>1) {
 			

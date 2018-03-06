@@ -80,7 +80,17 @@ B4 d) Har laget en displayOptions metode i game som kan vise et String array opp
 Denne brukes av Player.displayInventory (tast 'I') til å vise innholdet av pItems-listen
 
 B4 div: 
+* Player har nå 2 mulige "states" ved keypress, enten er player i menu eller normal play, som indikeres av en boolean i game: options
+* Hvis game.getOptions er false, behandles keypress som normalt, slik at vi kan bevege oss i en retning eller trykke E = pickup, C = drop, I = inventory
+* Hvis game.getOptions er true, kreves input av type digit. 
+* enum currentOpt av typen opt holder styr på hva som skal gjøres med det ventede option-valget
+* int nOptions holder styr på hvor mange valgmuligheter som er i gjeldende meny
+* tryPickUp og tryDrop vil gi beskjed om det ikke er noe å slippe eller plukke opp, hvis det er bare 1 mulig item utfører de ønsket handling. 
+Hvis det er flere mulige, blir game.options satt til true og currentOpt satt til drop eller pickUp (avhengig av hvilken metode som ble kalt).
+game.displayOptions lister valgmuligheter og spillet venter nå på input av valg
+* Når input av valg er akseptert, kalles drop eller pickUp i Player, og game.options blir satt til false, slik at spillet fortsetter som normalt.
 
+#TODO: begrense antall items per loc og i inventory til 10
 
 # Del C
 ## Oversikt over designvalg og hva du har gjort

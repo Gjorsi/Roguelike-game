@@ -61,13 +61,11 @@ public class Game implements IGame {
 	private final ITurtle painter;
 	private final Printer printer;
 	private int numPlayers = 0;
-	private Screen gScreen;
 	private boolean options;
 
 	public Game(Screen screen, ITurtle painter, Printer printer) {
 		this.painter = painter;
 		this.printer = printer;
-		this.gScreen = screen;
 		this.options = false;
 
 		// TODO: (*very* optional) for advanced factory technique, use

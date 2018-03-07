@@ -356,4 +356,13 @@ public interface IGame {
 
 	IActor getActorAt(ILocation loc);
 
+	/**
+	 * Get a list of all items and actors in loc
+	 * 
+	 * @param loc
+	 * location of where to check
+	 * @return list of all IItems found
+	 */
+	List<IItem> allItemsActors(ILocation loc);
+
 }

@@ -91,6 +91,14 @@ public class Game implements IGame {
 				map.add(loc, item);
 			}
 		}
+		
+		String[] instructions = new String[5];
+		instructions[0] = "Controls:";
+		instructions[1] = "Arrows = move";
+		instructions[2] = "I = show inventory";
+		instructions[3] = "C = drop item";
+		instructions[4] = "E = pick up item";
+		displayOptions(instructions);
 
 	}
 
@@ -140,10 +148,6 @@ public class Game implements IGame {
 			s[4] = String.format("%s takes %d damage.", target.getName(), currentActor.getDamage());
 			displayOptions(s);
 			map.clean(loc);
-			
-			//update status of player if hit, to see that health was lost
-			if (target instanceof IPlayer)
-				((IPlayer) target).showStatus(this);
 			
 		} else {
 			//miss
@@ -414,6 +418,16 @@ public class Game implements IGame {
 			return currentLocation.go(dir);
 		else
 			return null;
+	}
+	
+	@Override
+	public List<IItem> allItemsActors(ILocation loc) {
+		List<IItem> itemsActors = getItems(loc);
+		
+		if (map.hasActors(loc))
+			itemsActors.add((IItem)map.getActors(loc));
+		
+		return itemsActors;	
 	}
 
 	/**

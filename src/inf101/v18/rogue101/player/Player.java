@@ -121,6 +121,7 @@ public class Player implements IPlayer {
 	@Override
 	public int handleDamage(IGame game, IItem source, int amount) {
 		health -= amount;
+		showStatus(game);
 		return amount;
 	}
 
@@ -153,6 +154,9 @@ public class Player implements IPlayer {
 				break;
 			case I:
 				displayInventory(game);
+				break;
+			case X:
+				tryAttack(game);
 				break;
 			default:
 				break;
@@ -191,11 +195,37 @@ public class Player implements IPlayer {
 
 	}
 
+	private void tryAttack(IGame game) {
+		
+		List<GridDirection> validDirections = new ArrayList<>();
+		
+		// store directions where there are possible targets
+		for (GridDirection dir : GridDirection.FOUR_DIRECTIONS) {
+			if (game.allItemsActors(game.getLocation(dir)).size() > 0)
+				validDirections.add(dir);
+		}		
+		
+		if (validDirections.size() < 1) {
+			game.displayMessage("There is nothing nearby to attack.");
+		} else if (validDirections.size() == 1) {
+			game.changeOptions();
+			attackDir(validDirections.get(0));
+		} else {
+			game.changeOptions();
+			
+		}
+		
+	}
+
+	private void attackDir(GridDirection dir) {
+		if ()
+	}
+
 	private void tryDrop(IGame game) {
 		
 		if (pItems.size()>1) {
 			
-			if (game.getLocalItems().size() > 8) {
+			if (game.getLocalItems().size() > 7) {
 				game.displayMessage("Too many items on the ground. You have to find some other place to drop your trash.");
 				return;
 			}

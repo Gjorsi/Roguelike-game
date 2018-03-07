@@ -101,6 +101,9 @@ Dette for å unngå videre problemer med meny-valg fra 1-9
 B6 a) OK
 * Setter IActor defence til 10 eller mer i stedet for å legge til 10 på alle defence i attack metoden
 
+B6 b) OK
+* Rabbits ser først etter player i GridDirection.FOUR_DIRECTIONS, og angriper hvis den finner player, ellers normal turn
+
 # Del C
 ## Oversikt over designvalg og hva du har gjort
 * ... blah, blah, er implementert i klassen [KurtMario](src/inf101/v18/rogue101/player/KurtMario.java), blah, blah `ITurtleShell` ...

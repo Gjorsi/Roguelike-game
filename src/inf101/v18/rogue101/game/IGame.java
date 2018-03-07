@@ -354,4 +354,6 @@ public interface IGame {
 	 */
 	void clearMessages();
 
+	IActor getActorAt(ILocation loc);
+
 }

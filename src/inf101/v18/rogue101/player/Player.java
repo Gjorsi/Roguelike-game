@@ -120,8 +120,8 @@ public class Player implements IPlayer {
 	 */
 	@Override
 	public int handleDamage(IGame game, IItem source, int amount) {
-		// TODO Auto-generated method stub
-		return 0;
+		health -= amount;
+		return amount;
 	}
 
 	
@@ -297,7 +297,8 @@ public class Player implements IPlayer {
 			game.displayMessage("Nope.");
 	}
 
-	private void showStatus(IGame game) {
+	@Override
+	public void showStatus(IGame game) {
 		game.formatStatus("Player name: %s || Health: %d/%d || Defense: %d || Attack: %d ", getName(), getCurrentHealth(), getMaxHealth(), getDefence(), getAttack() );
 	}
 	

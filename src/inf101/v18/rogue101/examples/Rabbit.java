@@ -10,6 +10,7 @@ import inf101.v18.grid.ILocation;
 import inf101.v18.rogue101.game.IGame;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.INonPlayer;
+import inf101.v18.rogue101.objects.IPlayer;
 
 public class Rabbit implements INonPlayer {
 	private int food = 0;
@@ -46,6 +47,13 @@ public class Rabbit implements INonPlayer {
 //				possibleMoves.add(dir);
 //		}
 		
+		for (GridDirection dir : GridDirection.FOUR_DIRECTIONS) {
+			if (game.getActorAt(game.getLocation(dir)) instanceof IPlayer) {
+				game.attack(dir, game.getActorAt(game.getLocation(dir)));
+				return;
+			}
+		}
+		
 		List<GridDirection> possibleMoves = game.getPossibleMoves();
 		
 		if (!possibleMoves.isEmpty()) {
@@ -73,7 +81,7 @@ public class Rabbit implements INonPlayer {
 
 	@Override
 	public int getAttack() {
-		return 1000;
+		return 1;
 	}
 
 	@Override
@@ -83,12 +91,12 @@ public class Rabbit implements INonPlayer {
 
 	@Override
 	public int getDamage() {
-		return 1000;
+		return getAttack()*5;
 	}
 
 	@Override
 	public int getDefence() {
-		return 1000;
+		return 10;
 	}
 
 	@Override

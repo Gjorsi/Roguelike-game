@@ -121,27 +121,35 @@ public class Game implements IGame {
 
 	@Override
 	public ILocation attack(GridDirection dir, IItem target) {
-		ILocation loc = map.go(currentLocation, dir);
+		ILocation loc = getLocation(dir);
 		if (!map.has(loc, target))
 			throw new IllegalMoveException("Target isn't there!");
 		
 		int attackRoll = random.nextInt(20)+1+currentActor.getAttack();
 
-		String[] s = new String[4];
+		String[] s = new String[5];
 		
 		s[0] = "Attack!";
-		s[1] = String.format("%s rolled %d against %s's armor class of %d.", currentActor.getName(), attackRoll, target.getName(), target.getDefence());
+		s[1] = String.format("%s rolled %d against" , currentActor.getName(), attackRoll);
+		s[2] = String.format("%s's armor class of %d.", target.getName(), target.getDefence());
 		
 		if (attackRoll >= target.getDefence()) {
 			//hit
 			target.handleDamage(this, currentActor, currentActor.getDamage());
-			s[2] = "Success!";
-			s[3] = String.format("%s takes %d damage.", target.getName(), currentActor.getDamage());
-			
+			s[3] = "Success!";
+			s[4] = String.format("%s takes %d damage.", target.getName(), currentActor.getDamage());
+			displayOptions(s);
 			map.clean(loc);
+			
+			//update status of player if hit, to see that health was lost
+			if (target instanceof IPlayer)
+				((IPlayer) target).showStatus(this);
+			
 		} else {
 			//miss
-			s[2] = "Failed!";
+			s[3] = "Failed!";
+			s[4] = "";
+			displayOptions(s);
 		}
 		
 		if (target.isDestroyed()) {
@@ -437,7 +445,7 @@ public class Game implements IGame {
 	public List<ILocation> getVisible() {
 		// TODO: maybe replace 3 by some sort of visibility range obtained from
 		// currentActor?
-		return map.getNeighbourhood(currentLocation, 3);
+		return map.getNeighbourhood(currentLocation, 1);
 	}
 
 	@Override
@@ -548,6 +556,14 @@ public class Game implements IGame {
 	@Override
 	public IActor getActor() {
 		return currentActor;
+	}
+	
+	@Override
+	public IActor getActorAt(ILocation loc) {
+		if (map.getActors(loc).size() > 0)
+			return map.getActors(loc).get(0);
+		else
+			return null;
 	}
 
 	public ILocation setCurrent(IActor actor) {

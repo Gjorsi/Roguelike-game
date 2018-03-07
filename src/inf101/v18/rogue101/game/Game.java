@@ -122,14 +122,28 @@ public class Game implements IGame {
 	@Override
 	public ILocation attack(GridDirection dir, IItem target) {
 		ILocation loc = map.go(currentLocation, dir);
-		if (map.has(loc, target))
+		if (!map.has(loc, target))
 			throw new IllegalMoveException("Target isn't there!");
-
-		// TODO: implement attack
-
 		
-		map.clean(loc);
+		int attackRoll = random.nextInt(20)+1+currentActor.getAttack();
 
+		String[] s = new String[4];
+		
+		s[0] = "Attack!";
+		s[1] = String.format("%s rolled %d against %s's armor class of %d.", currentActor.getName(), attackRoll, target.getName(), target.getDefence());
+		
+		if (attackRoll >= target.getDefence()) {
+			//hit
+			target.handleDamage(this, currentActor, currentActor.getDamage());
+			s[2] = "Success!";
+			s[3] = String.format("%s takes %d damage.", target.getName(), currentActor.getDamage());
+			
+			map.clean(loc);
+		} else {
+			//miss
+			s[2] = "Failed!";
+		}
+		
 		if (target.isDestroyed()) {
 			return move(dir);
 		} else {

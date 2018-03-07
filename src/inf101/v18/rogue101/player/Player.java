@@ -25,6 +25,8 @@ public class Player implements IPlayer {
 	private String name;
 	private int health;
 	private int maxHealth;
+	private int attack;
+	private int defence;
 	private List<IItem> pItems;
 	private int nOptions;
 	private enum opt {pickUp, drop};
@@ -39,6 +41,8 @@ public class Player implements IPlayer {
 		this.name = "Gange-Rolf";
 		this.pItems = new ArrayList<>();
 		this.nOptions = 0;
+		this.defence = 10;
+		this.attack = 1;
 		
 	}
 
@@ -47,8 +51,7 @@ public class Player implements IPlayer {
 	 */
 	@Override
 	public int getAttack() {
-		// TODO Auto-generated method stub
-		return 1;
+		return attack;
 	}
 
 	/* (non-Javadoc)
@@ -56,8 +59,7 @@ public class Player implements IPlayer {
 	 */
 	@Override
 	public int getDamage() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getAttack()*5;
 	}
 
 	/* (non-Javadoc)
@@ -73,8 +75,7 @@ public class Player implements IPlayer {
 	 */
 	@Override
 	public int getDefence() {
-		// TODO Auto-generated method stub
-		return 1;
+		return defence;
 	}
 
 	

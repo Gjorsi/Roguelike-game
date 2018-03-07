@@ -197,10 +197,10 @@ public class Game implements IGame {
 					displayDebug("doTurn(): Hmm, this is a very strange actor: " + currentActor);
 				}
 				
-				//possibly add a new Carrot
+				//possibly add a new Carrot (if there is no carrot at chosen random loc, and there are less than 9 items at loc)
 				A: if (random.nextInt(100) < 5) {
 					ILocation newCarrotLoc = map.getLocation(random.nextInt(getWidth()), random.nextInt(getHeight()));
-					if (map.canGo(newCarrotLoc)) {
+					if (map.canGo(newCarrotLoc) && map.getItems(newCarrotLoc).size() < 9) {
 						for (IItem item : getItems(newCarrotLoc)) {
 							if (item instanceof Carrot)
 								break A;

@@ -94,7 +94,9 @@ B5 a-d) OK
 * Finner alle neighbours innen distance med nøstede for-loops som sjekker et kvadrat 2*distance+1 sentrert på location, men unngår å telle med location, og unngår å telle ruter utenfor grid
 * Sorterer locations funnet ved en ny metode: GameMap.sortNeighbourhood (insertion sort algoritme)
 
-#TODO: begrense antall items per loc og i inventory til 10
+B5 div:
+* Begrenset maks antall items i player inventory til 9, og maks antall items per location til 9. 
+Dette for å unngå videre problemer med meny-valg fra 1-9
 
 # Del C
 ## Oversikt over designvalg og hva du har gjort

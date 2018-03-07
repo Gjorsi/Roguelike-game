@@ -194,6 +194,11 @@ public class Player implements IPlayer {
 		
 		if (pItems.size()>1) {
 			
+			if (game.getLocalItems().size() > 8) {
+				game.displayMessage("Too many items on the ground. You have to find some other place to drop your trash.");
+				return;
+			}
+			
 			String itemOptions[] = new String[pItems.size()+1];
 			itemOptions[0] = "Choose item to drop:";
 			
@@ -248,6 +253,12 @@ public class Player implements IPlayer {
 		String itemOptions[] = new String[availableItems.size()+1];
 				
 		itemOptions[0] = "Choose item to attempt to pick up:";
+		
+		//return if inventory is full (more than 8 items)
+		if (pItems.size()>8) {
+			game.displayMessage("Your inventory is full.");
+			return;
+		}
 		
 		if (availableItems.size() == 1) {
 			pItems.add(game.pickUp(availableItems.get(0)));

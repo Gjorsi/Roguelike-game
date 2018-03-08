@@ -185,14 +185,15 @@ public class Player implements IPlayer {
 						game.clearMessages();
 						break;
 					case attackDir:
+						game.clearMessages();
 						chosenDir = digit-1;
 						attackDir(game, validDirections.get(digit-1));
-						game.clearMessages();
+						
 						break;
 					case attackTar:
+						game.clearMessages();
 						game.attack(validDirections.get(chosenDir), possibleTargets.get(digit-1));
 						game.changeOptions();
-						game.clearMessages();
 						break;
 					default:
 						break;
@@ -210,6 +211,9 @@ public class Player implements IPlayer {
 
 	}
 
+	// see if there are any targets in GridDirection.FOUR_DIRECTIONS
+	// if there's only one possible direction to attack, run attackDir
+	// if more than one possible dir, prompt user to choose dir
 	private void tryAttack(IGame game) {
 		
 		validDirections.clear();

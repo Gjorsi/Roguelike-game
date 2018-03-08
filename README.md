@@ -104,10 +104,11 @@ B6 a) OK
 B6 b) OK
 * Rabbits ser først etter player i GridDirection.FOUR_DIRECTIONS, og angriper hvis den finner player, ellers normal turn
 
-B6 c) Nesten OK
+B6 c) ~~Nesten~~ OK
 * Player kan trykke X for attack, får valg av retning hvis det er mål i mer enn 1 retning - når retning er valgt, kommer valg av target hvis det er mer enn 1.
-I andre meny (velge target) kommer ikke game.displayOptions opp - vet ikke helt hvorfor
-* Menyvalgene kan leses i console, så attack funksjon kan brukes som tiltenkt
+~~I andre meny (velge target) kommer ikke game.displayOptions opp - vet ikke helt hvorfor~~
+* ~~Menyvalgene kan leses i console, så attack funksjon kan brukes som tiltenkt~~
+* Fikset feil som gjorde at andre meny (for å velge target) ikke ble vist i game.displayOptions.
 
 ##TODO se på hvordan vinduet tegnes, og fikse så det tegnes selv om player er i meny
 

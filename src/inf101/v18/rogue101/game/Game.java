@@ -424,6 +424,7 @@ public class Game implements IGame {
 	public List<IItem> allItemsActors(ILocation loc) {
 		List<IItem> itemsActors = getItems(loc);
 		
+		// should only be one actor per location
 		if (map.hasActors(loc))
 			itemsActors.add((IItem)map.getActors(loc).get(0));
 		

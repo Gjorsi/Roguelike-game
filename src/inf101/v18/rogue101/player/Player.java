@@ -29,8 +29,11 @@ public class Player implements IPlayer {
 	private int defence;
 	private List<IItem> pItems;
 	private int nOptions;
-	private enum opt {pickUp, drop};
+	private enum opt {pickUp, drop, attackDir, attackTar};
 	private opt currentOpt;
+	private List<GridDirection> validDirections;
+	private List<IItem> possibleTargets;
+	private int chosenDir;
 	
 	/**
 	 * 
@@ -43,6 +46,8 @@ public class Player implements IPlayer {
 		this.nOptions = 0;
 		this.defence = 10;
 		this.attack = 1;
+		this.validDirections = new ArrayList<>();
+		this.possibleTargets = new ArrayList<>();
 		
 	}
 
@@ -179,6 +184,16 @@ public class Player implements IPlayer {
 						pickUp(game, digit-1);
 						game.clearMessages();
 						break;
+					case attackDir:
+						chosenDir = digit-1;
+						attackDir(game, validDirections.get(digit-1));
+						game.clearMessages();
+						break;
+					case attackTar:
+						game.attack(validDirections.get(chosenDir), possibleTargets.get(digit-1));
+						game.changeOptions();
+						game.clearMessages();
+						break;
 					default:
 						break;
 					}
@@ -197,7 +212,7 @@ public class Player implements IPlayer {
 
 	private void tryAttack(IGame game) {
 		
-		List<GridDirection> validDirections = new ArrayList<>();
+		validDirections.clear();
 		
 		// store directions where there are possible targets
 		for (GridDirection dir : GridDirection.FOUR_DIRECTIONS) {
@@ -207,18 +222,49 @@ public class Player implements IPlayer {
 		
 		if (validDirections.size() < 1) {
 			game.displayMessage("There is nothing nearby to attack.");
+			
 		} else if (validDirections.size() == 1) {
-			game.changeOptions();
-			attackDir(validDirections.get(0));
+			// if only one dir has any target(s), try attack in that dir
+			attackDir(game, validDirections.get(0));
+			
 		} else {
+			// more than one possible dir, we have to choose
 			game.changeOptions();
+			currentOpt = opt.attackDir;
+			nOptions = validDirections.size();
+			
+			String[] s = new String[nOptions+1];
+			s[0] = "Choose direction in which to attack:";
+			for (int i=0; i<nOptions; i++) {
+				s[i+1] = String.format("%d - %s", i+1, validDirections.get(i).name());
+			}
+			
+			game.displayOptions(s);
 			
 		}
 		
 	}
 
-	private void attackDir(GridDirection dir) {
-		if ()
+	// attack dir is decided, now attack target if only 1, otherwise choose
+	private void attackDir(IGame game, GridDirection dir) {
+		possibleTargets.clear();
+		possibleTargets = game.allItemsActors(game.getLocation(dir));
+		if (possibleTargets.size() == 1) {
+			game.attack(dir, possibleTargets.get(0));
+			game.changeOptions();
+			
+		} else {
+			currentOpt = opt.attackTar;
+			nOptions = possibleTargets.size();
+			
+			String[] s = new String[nOptions+1];
+			s[0] = "Choose target:";
+			for (int i=0; i<nOptions; i++) {
+				s[i+1] = String.format("%d - %s", i+1, possibleTargets.get(i).getName());
+			}
+			
+			game.displayOptions(s);
+		}
 	}
 
 	private void tryDrop(IGame game) {

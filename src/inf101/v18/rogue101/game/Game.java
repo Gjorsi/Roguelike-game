@@ -425,7 +425,7 @@ public class Game implements IGame {
 		List<IItem> itemsActors = getItems(loc);
 		
 		if (map.hasActors(loc))
-			itemsActors.add((IItem)map.getActors(loc));
+			itemsActors.add((IItem)map.getActors(loc).get(0));
 		
 		return itemsActors;	
 	}

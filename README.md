@@ -104,9 +104,18 @@ B6 a) OK
 B6 b) OK
 * Rabbits ser først etter player i GridDirection.FOUR_DIRECTIONS, og angriper hvis den finner player, ellers normal turn
 
+B6 c) Nesten OK
+* Player kan trykke X for attack, får valg av retning hvis det er mål i mer enn 1 retning - når retning er valgt, kommer valg av target hvis det er mer enn 1.
+I andre meny (velge target) kommer ikke game.displayOptions opp - vet ikke helt hvorfor
+* Menyvalgene kan leses i console, så attack funksjon kan brukes som tiltenkt
+
+##TODO se på hvordan vinduet tegnes, og fikse så det tegnes selv om player er i meny
+
 # Del C
 ## Oversikt over designvalg og hva du har gjort
 * ... blah, blah, er implementert i klassen [KurtMario](src/inf101/v18/rogue101/player/KurtMario.java), blah, blah `ITurtleShell` ...
+
+##TODO endre game.displayOptions til å bli en slags logg - når ny tekst kommer inn, flytt nåværende tekst til de eldste linjene går ut av bildet
  
  
  

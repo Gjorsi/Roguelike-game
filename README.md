@@ -110,6 +110,11 @@ B6 c) ~~Nesten~~ OK
 * ~~Menyvalgene kan leses i console, så attack funksjon kan brukes som tiltenkt~~
 * Fikset feil som gjorde at andre meny (for å velge target) ikke ble vist i game.displayOptions.
 
+B7 a) Jeg har ikke benyttet meg av noen andre retninger enn GridDirections.FOUR_DIRECTIONS, eller bruk av grader, så mye er likt.
+Men det er praktisk at game holder styr på currentLocation og kan gi loc i naboceller i retning dir.
+
+B7 b) 
+
 ##TODO se på hvordan vinduet tegnes, og fikse så det tegnes selv om player er i meny
 
 # Del C

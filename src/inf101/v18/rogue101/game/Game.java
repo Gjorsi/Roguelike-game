@@ -62,11 +62,13 @@ public class Game implements IGame {
 	private final Printer printer;
 	private int numPlayers = 0;
 	private boolean options;
+	private String[] log;
 
 	public Game(Screen screen, ITurtle painter, Printer printer) {
 		this.painter = painter;
 		this.printer = printer;
 		this.options = false;
+		this.log = new String[20];
 
 		// TODO: (*very* optional) for advanced factory technique, use
 		// something like "itemFactories.put("R", () -> new Rabbit());"
@@ -92,12 +94,19 @@ public class Game implements IGame {
 			}
 		}
 		
-		String[] instructions = new String[5];
+		// initialise log
+		for (int i=0; i<log.length; i++) {
+			log[i] = "";
+		}
+		
+		// give controller instructions
+		String[] instructions = new String[6];
 		instructions[0] = "Controls:";
 		instructions[1] = "Arrows = move";
 		instructions[2] = "I = show inventory";
 		instructions[3] = "C = drop item";
 		instructions[4] = "E = pick up item";
+		instructions[5] = "X = attack";
 		displayOptions(instructions);
 
 	}
@@ -152,7 +161,7 @@ public class Game implements IGame {
 		} else {
 			//miss
 			s[3] = "Failed!";
-			s[4] = "";
+			s[4] = String.format("%s deflects %s's attack", target.getName(), currentActor.getName());
 			displayOptions(s);
 		}
 		
@@ -341,20 +350,25 @@ public class Game implements IGame {
 	@Override
 	public void displayOptions(String[] s) {
 		
-		printer.clearLine(1);
-		for (int i=2;i<20;i++) {
-			printer.clearLine(i);
+		// move all text down to make room for new String s
+		for (int i=19; i>s.length; i--) {
+			log[i] = log[i-s.length];
 		}
 		
-		printer.printAt(41, 1, s[0]);
-		System.out.println("OptionsHeader: «" + s[0] + "»");
+		log[s.length] = "---------------------------------";
 		
-		for (int i=1;i<s.length && i<19;i++) {
-			printer.printAt(41, i+1, s[i]);
-			System.out.println("Options: «" + s[i] + "»");
+		// put new String s on top of the display
+		for (int i=0; i<s.length; i++) {
+			log[i] = s[i];
 		}
 		
-		
+		// print log
+		for (int i=0; i<20; i++) {
+			printer.clearLine(i+1);
+			printer.printAt(41, i+1, log[i]);
+			if (log[i].length()>0)
+				System.out.println("Log: «" + log[i] + "»");
+		}
 	}
 	
 	public void clearMessages() {

@@ -372,9 +372,9 @@ public class Game implements IGame {
 	}
 	
 	public void clearMessages() {
-		for (int i=1;i<20;i++) {
-			printer.clearLine(i);
-		}
+//		for (int i=1;i<20;i++) {
+//			printer.clearLine(i);
+//		}
 		printer.clearLine(Main.LINE_MSG1);
 	}
 

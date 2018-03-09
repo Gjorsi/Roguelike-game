@@ -24,15 +24,15 @@ Dette prosjektet inneholder [Semesteroppgave 1](SEM-1.md). Du kan også [lese op
 # Fyll inn egne svar/beskrivelse/kommentarer til prosjektet under
 * Levert av:   Carl August Gjørsvik (cgj008)
 * Del A: [ ] helt ferdig, [X] delvis ferdig
-* Del B: [ ] helt ferdig, [ ] delvis ferdig
-* Del C: [ ] helt ferdig, [ ] delvis ferdig
+* Del B: [X] helt ferdig, [ ] delvis ferdig
+* Del C: [ ] helt ferdig, [X] delvis ferdig
 * [ ] hele semesteroppgaven er ferdig og klar til retting!
 
 # Del A
 ## Svar på spørsmål
 A1 a) ??
 
-A1 b) ??
+A1 b) IItem er overordnet interface for alle objekter som er på "spillkartet", under IItem i hierarkiet har vi også IActor, og IPlayer og INonPlayer under IActor igjen. IGame klasser tar imot IItem/ILocation og returnerer IItem, ILocation og IActor. 
 
 A1 c) Fordi det er noen metoder, altså de som er i IGameMap, som vi ikke vil andre classes enn Game skal ha tilgang til (?)
 
@@ -66,7 +66,8 @@ B1 a-d) OK - den nye klassen heter Mushroom (i examples-pakken)
 
 B2 a-e) OK
 
-B2 f) Får ikke kjørt tester på Player class pga "internal graphics not initialized" bug. 
+B2 f) ~~Får ikke kjørt tester på Player class pga "internal graphics not initialized" bug.~~
+* bug fikset, nå er alt OK
 
 B3 a-c) Implementert, GameMapTest legger inn 20 tilfeldige items og tester at alle ligger i rekkefølge.
 
@@ -121,7 +122,6 @@ B7 b)
 ## Oversikt over designvalg og hva du har gjort
 * ... blah, blah, er implementert i klassen [KurtMario](src/inf101/v18/rogue101/player/KurtMario.java), blah, blah `ITurtleShell` ...
 
-##TODO endre game.displayOptions til å bli en slags logg - når ny tekst kommer inn, flytt nåværende tekst til de eldste linjene går ut av bildet
  
  
  

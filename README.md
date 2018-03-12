@@ -118,6 +118,8 @@ B7 b)
 
 ##TODO se på hvordan vinduet tegnes, og fikse så det tegnes selv om player er i meny
 
+##TODO Finne ut hvorfor rabbits angriper 2 ganger etter player angriper
+
 # Del C
 ## Oversikt over designvalg og hva du har gjort
 * ... blah, blah, er implementert i klassen [KurtMario](src/inf101/v18/rogue101/player/KurtMario.java), blah, blah `ITurtleShell` ...

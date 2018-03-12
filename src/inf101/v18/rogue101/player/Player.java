@@ -24,7 +24,6 @@ public class Player implements IPlayer {
 
 	private String name;
 	private int health;
-	private int maxHealth;
 	private int attack;
 	private int defence;
 	private List<IItem> pItems;
@@ -39,8 +38,7 @@ public class Player implements IPlayer {
 	 * 
 	 */
 	public Player() {
-		this.maxHealth = 100;
-		this.health = 100;
+		this.health = getMaxHealth();
 		this.name = "Gange-Rolf";
 		this.pItems = new ArrayList<>();
 		this.nOptions = 0;
@@ -89,7 +87,7 @@ public class Player implements IPlayer {
 	 */
 	@Override
 	public int getMaxHealth() {
-		return maxHealth;
+		return 100;
 	}
 
 	

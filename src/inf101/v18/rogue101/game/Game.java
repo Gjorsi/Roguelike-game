@@ -180,6 +180,7 @@ public class Game implements IGame {
 	 */
 	public boolean doTurn() {
 		do {
+			
 			if (actors.isEmpty()) {
 				// System.err.println("new turn!");
 
@@ -218,6 +219,11 @@ public class Game implements IGame {
 						currentActor = null;
 						currentLocation = null;
 					} else {
+						
+						//check if player is on exit location
+						if (currentLocation.getX() == 1 && currentLocation.getY() == 1)
+							newLevel(2);
+						
 						// For the human player, we need to wait for input, so we just return.
 						// Further keypresses will cause keyPressed() to be called, and once the human
 						// makes a move, it'll lose its movement point and doTurn() will be called again
@@ -250,6 +256,41 @@ public class Game implements IGame {
 		return true;
 	}
 
+	private void newLevel(int n) {
+		
+		//save player object
+		IPlayer player = null;
+		for (IActor actor : actors) {
+			if (actor instanceof IPlayer)
+				player = (IPlayer)actor;
+		}
+		
+		//clear actors from previous level
+		actors.clear();
+		
+		
+		IGrid<String> inputGrid = MapReader.readFile("maps/level" + n + ".txt");
+		if (inputGrid == null) {
+			System.err.println("Map not found – falling back to builtin map");
+			inputGrid = MapReader.readString(Main.BUILTIN_MAP);
+		}
+		this.map = new GameMap(inputGrid.getArea());
+		
+		IItem item = null;
+		for (ILocation loc : inputGrid.locations()) {
+			if (inputGrid.get(loc) == "@")
+				item = player;
+			else 
+				item = createItem(inputGrid.get(loc));
+			
+			if (item != null) {
+				map.add(loc, item);
+			}
+		}
+		
+		beginTurn();
+	}
+	
 	/**
 	 * Go through the map and collect all the actors.
 	 */

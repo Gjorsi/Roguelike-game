@@ -81,7 +81,7 @@ public class Game implements IGame {
 		// inputGrid will be filled with single-character strings indicating what (if
 		// anything)
 		// should be placed at that map square
-		IGrid<String> inputGrid = MapReader.readFile("maps/level1.txt");
+		IGrid<String> inputGrid = MapReader.readFile("maps/startlevel.txt");
 		if (inputGrid == null) {
 			System.err.println("Map not found – falling back to builtin map");
 			inputGrid = MapReader.readString(Main.BUILTIN_MAP);
@@ -264,7 +264,6 @@ public class Game implements IGame {
 		//clear actors from previous level
 		actors.clear();
 		
-		
 		IGrid<String> inputGrid = MapReader.readFile("maps/level" + n + ".txt");
 		if (inputGrid == null) {
 			System.err.println("Map not found – falling back to builtin map");
@@ -274,15 +273,18 @@ public class Game implements IGame {
 		
 		IItem item = null;
 		for (ILocation loc : inputGrid.locations()) {
-			if (inputGrid.get(loc) == "@")
+			item = createItem(inputGrid.get(loc));
+			
+			if (item instanceof IPlayer) {
 				item = player;
-			else 
-				item = createItem(inputGrid.get(loc));
+			}
 			
 			if (item != null) {
 				map.add(loc, item);
 			}
 		}
+		
+		displayMessage("Loaded level " + n);
 		
 		beginTurn();
 	}

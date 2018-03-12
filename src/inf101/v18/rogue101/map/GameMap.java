@@ -31,6 +31,8 @@ public class GameMap implements IGameMap {
 	 * These locations have changed, and need to be redrawn
 	 */
 	private final Set<ILocation> dirtyLocs = new HashSet<>();
+	
+	private List<ILocation> visibleLocs;
 	/**
 	 * An index of all the items in the map and their locations.
 	 */

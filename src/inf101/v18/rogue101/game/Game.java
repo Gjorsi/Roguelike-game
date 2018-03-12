@@ -25,6 +25,7 @@ import inf101.v18.rogue101.map.IGameMap;
 import inf101.v18.rogue101.map.IMapView;
 import inf101.v18.rogue101.map.MapReader;
 import inf101.v18.rogue101.objects.Dust;
+import inf101.v18.rogue101.objects.Exit;
 import inf101.v18.rogue101.objects.IActor;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.INonPlayer;
@@ -221,8 +222,9 @@ public class Game implements IGame {
 					} else {
 						
 						//check if player is on exit location
-						if (currentLocation.getX() == 1 && currentLocation.getY() == 1)
-							newLevel(2);
+						if (getLocalItems().size() > 0)
+							if (getLocalItems().get(0) instanceof Exit)
+								newLevel(2);
 						
 						// For the human player, we need to wait for input, so we just return.
 						// Further keypresses will cause keyPressed() to be called, and once the human
@@ -348,6 +350,8 @@ public class Game implements IGame {
 			return new Mushroom();
 		case "@":
 			return new Player();
+		case "E":
+			return new Exit();
 		case " ":
 			return null;
 		default:

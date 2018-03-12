@@ -259,11 +259,7 @@ public class Game implements IGame {
 	private void newLevel(int n) {
 		
 		//save player object
-		IPlayer player = null;
-		for (IActor actor : actors) {
-			if (actor instanceof IPlayer)
-				player = (IPlayer)actor;
-		}
+		IItem player = currentActor;
 		
 		//clear actors from previous level
 		actors.clear();

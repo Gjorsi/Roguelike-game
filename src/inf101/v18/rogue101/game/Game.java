@@ -352,7 +352,7 @@ public class Game implements IGame {
 		
 		// move all text down to make room for new String s
 		for (int i=19; i>s.length; i--) {
-			log[i] = log[i-s.length];
+			log[i] = log[i-s.length-1];
 		}
 		
 		log[s.length] = "---------------------------------";
@@ -524,10 +524,6 @@ public class Game implements IGame {
 				displayMessage("You can't pick that up. Maybe you're not strong enough.");
 				return null;
 			}
-			
-			// TODO: bruk getAttack()/getDefence() til å avgjøre om man får til å plukke opp
-			// tingen
-			// evt.: en IActor kan bare plukkes opp hvis den har få/ingen helsepoeng igjen
 			
 		} else {
 			displayMessage("There's nothing there.");

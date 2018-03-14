@@ -81,7 +81,7 @@ public class Game implements IGame {
 		// inputGrid will be filled with single-character strings indicating what (if
 		// anything)
 		// should be placed at that map square
-		IGrid<String> inputGrid = MapReader.readFile("maps/startlevel.txt");
+		IGrid<String> inputGrid = MapReader.readFile("maps/level1.txt");
 		if (inputGrid == null) {
 			System.err.println("Map not found – falling back to builtin map");
 			inputGrid = MapReader.readString(Main.BUILTIN_MAP);
@@ -427,6 +427,11 @@ public class Game implements IGame {
 //			printer.clearLine(i);
 //		}
 		printer.clearLine(Main.LINE_MSG1);
+	}
+	
+	// used by PlayerTest.java
+	public String getLogLine(int i) {
+		return log[i];
 	}
 
 	public void draw() {

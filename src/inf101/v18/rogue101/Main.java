@@ -133,8 +133,9 @@ public class Main extends Application {
 				return true;
 			} else {
 				try {
-					game.keyPressed(code);
-					if (!game.getOptions()) //dont want to let NonPlayers do turn when in menu
+					if (game.keyPressed(code))
+						game.draw();
+					else 
 						doTurn();
 				} catch (Exception e) {
 					e.printStackTrace();

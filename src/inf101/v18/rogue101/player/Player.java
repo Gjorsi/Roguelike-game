@@ -135,6 +135,8 @@ public class Player implements IPlayer {
 	@Override
 	public void keyPressed(IGame game, KeyCode key) {
 		
+		// hvis game ikke venter på option valg, godta vanlige tastetrykk,
+		// ellers godtas kun "digit" taster
 		if (!game.getOptions()) {
 			switch (key) {
 			case LEFT:

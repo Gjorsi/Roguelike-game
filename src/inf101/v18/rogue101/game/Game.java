@@ -528,14 +528,17 @@ public class Game implements IGame {
 		options = !options;
 	}
 	
-	public void keyPressed(KeyCode code) {
+	public boolean keyPressed(KeyCode code) {
 		// only an IPlayer/human can handle keypresses, and only if it's the human's
 		// turn
+		
+		//return true hvis player ikke er ferdig med turn, ellers false
 		if (currentActor instanceof IPlayer) {
 			((IPlayer) currentActor).keyPressed(this, code); // do your thing
-			if (movePoints <= 0 && !options)
-				doTurn(); // proceed with turn if we're out of moves
+			return movePoints > 0;
 		}
+		
+		return false;
 	}
 
 	@Override

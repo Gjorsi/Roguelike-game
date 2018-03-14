@@ -146,6 +146,8 @@ public interface IGame {
 	 * item will be returned if picking it succeeded (the actor <em>might</em> also
 	 * make a mistake and pick up the wrong item!).
 	 * 
+	 * item can only be picked up by actors with attack*10+40 > the items weight
+	 * 
 	 * @param item
 	 *            An item, should be in the current map location
 	 * @return The item that was picked up (normally <code>item</code>), or
@@ -189,7 +191,7 @@ public interface IGame {
 	double[] getFreeGraphicsAreaBounds();
 
 	/**
-	 * Get the bounds of the free texxt area.
+	 * Get the bounds of the free text area.
 	 * <p>
 	 * You can fill this with whatever you want, using {@link #getPrinter()} and
 	 * {@link #clearFreeTextArea()}.

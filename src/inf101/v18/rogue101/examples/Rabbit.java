@@ -125,4 +125,10 @@ public class Rabbit implements INonPlayer {
 		return amount;
 	}
 
+	@Override
+	public int getWeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -124,7 +124,11 @@ public class Player implements IPlayer {
 	@Override
 	public int handleDamage(IGame game, IItem source, int amount) {
 		health -= amount;
+		if (health <= 0) {
+			game.displayMessage("Game over!");
+		}
 		showStatus(game);
+		
 		return amount;
 	}
 
@@ -380,6 +384,11 @@ public class Player implements IPlayer {
 	@Override
 	public void showStatus(IGame game) {
 		game.formatStatus("Player name: %s || Health: %d/%d || Defense: %d || Attack: %d ", getName(), getCurrentHealth(), getMaxHealth(), getDefence(), getAttack() );
+	}
+
+	@Override
+	public int getWeight() {
+		return 800;
 	}
 	
 }

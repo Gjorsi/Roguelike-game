@@ -11,6 +11,7 @@ import inf101.v18.rogue101.game.IGame;
  */
 public class Exit implements IItem {
 
+	
 	/**
 	 * 
 	 */
@@ -19,7 +20,6 @@ public class Exit implements IItem {
 	
 	public Exit() {
 		this.health = getMaxHealth();
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)
@@ -37,7 +37,7 @@ public class Exit implements IItem {
 	@Override
 	public int getDefence() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 8;
 	}
 
 	/* (non-Javadoc)
@@ -81,8 +81,13 @@ public class Exit implements IItem {
 	 */
 	@Override
 	public int handleDamage(IGame game, IItem source, int amount) {
-		// TODO Auto-generated method stub
-		return 0;
+		health -= amount;
+		return amount;
+	}
+
+	@Override
+	public int getWeight() {
+		return 1000;
 	}
 
 }

@@ -116,14 +116,18 @@ Men det er praktisk at game holder styr på currentLocation og kan gi loc i nabo
 
 B7 b) 
 
-##TODO se på hvordan vinduet tegnes, og fikse så det tegnes selv om player er i meny
-
-##TODO Finne ut hvorfor rabbits angriper 2 ganger etter player angriper
-
 # Del C
 ## Oversikt over designvalg og hva du har gjort
 * ... blah, blah, er implementert i klassen [KurtMario](src/inf101/v18/rogue101/player/KurtMario.java), blah, blah `ITurtleShell` ...
 
+## Vekt
+* lagt inn getWeight i IItem interface
+* Items har en vekt der en verdi av 10 tilsvarer omtrentlig 1kg
+* game.pickUp er endret slik at Actors attack*10+40 er kapasiteten til å løfte opp noe
+* Med attack = 1 kan en da løfte 50 = omtrentlig 5kg
+* for player betyr dette opptil 9 items på 9kg hver hvis attack = 5. Kanskje ikke helt realistisk, men en grei forenkling. 
+ også er det ofte sånn i spill at vi bærer mye rot.
+ 
  
  
  

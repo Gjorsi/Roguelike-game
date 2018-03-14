@@ -67,6 +67,11 @@ public class Carrot implements IItem {
 	public String getSymbol() {
 		return "C";
 	}
+	
+	@Override
+	public int getWeight() {
+		return 1;
+	}
 
 	@Override
 	public int handleDamage(IGame game, IItem source, int amount) {

@@ -576,7 +576,7 @@ public class Game implements IGame {
 	public IItem pickUp(IItem item) {
 		if (item != null && map.has(currentLocation, item)) {
 			
-			if (currentActor.getAttack() >= item.getDefence()) {
+			if (currentActor.getAttack()*10+40 >= item.getWeight()) {
 				map.remove(currentLocation, item);
 				return item;
 			} else {

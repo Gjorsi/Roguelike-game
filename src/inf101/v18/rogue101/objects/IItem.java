@@ -145,6 +145,16 @@ public interface IItem extends Comparable<IItem> {
 	 * 
 	 * @return A single-codepoint string with the item's symbol
 	 */
+	
+	/**
+	 * Get the weight of the object.
+	 * <p>
+	 * The weight is used to determine whether the item can be picked up
+	 * a value of 10 in weight is considered approx 1kg
+	 * @return Weight of the item
+	 */
+	int getWeight();
+	
 	String getSymbol();
 
 	/**

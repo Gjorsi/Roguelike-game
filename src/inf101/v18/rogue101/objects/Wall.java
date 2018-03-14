@@ -47,4 +47,9 @@ public class Wall implements IItem {
 		hp -= amount;
 		return amount;
 	}
+
+	@Override
+	public int getWeight() {
+		return 10000;
+	}
 }

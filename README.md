@@ -128,7 +128,12 @@ B7 b)
 * for player betyr dette opptil 9 items på 9kg hver hvis attack = 5. Kanskje ikke helt realistisk, men en grei forenkling. 
  også er det ofte sånn i spill at vi bærer mye rot.
  
- 
+## Exit & Key
+* Exit-objekt er veien til neste nivå i spillet
+* Player trenger en IItem av type Key for å gå gjennom exit
+
+## IMonster interface
+* 
  
  
  

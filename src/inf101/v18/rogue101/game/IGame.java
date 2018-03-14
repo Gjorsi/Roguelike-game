@@ -2,6 +2,7 @@ package inf101.v18.rogue101.game;
 
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
 
 import inf101.v18.gfx.Screen;
 import inf101.v18.gfx.gfxmode.ITurtle;
@@ -366,5 +367,11 @@ public interface IGame {
 	 * @return list of all IItems found
 	 */
 	List<IItem> allItemsActors(ILocation loc);
+
+	/**
+	 * get current map level
+	 * @return current level (starts at 1)
+	 */
+	int getCurrentLevel();
 
 }

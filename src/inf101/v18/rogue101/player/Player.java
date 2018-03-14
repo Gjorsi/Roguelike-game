@@ -270,7 +270,8 @@ public class Player implements IPlayer {
 		possibleTargets = game.allItemsActors(game.getLocation(dir));
 		if (possibleTargets.size() == 1) {
 			game.attack(dir, possibleTargets.get(0));
-			game.changeOptions();
+			if (game.getOptions())
+				game.changeOptions();
 			
 		} else {
 			currentOpt = opt.attackTar;

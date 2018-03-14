@@ -31,6 +31,7 @@ import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.INonPlayer;
 import inf101.v18.rogue101.objects.IPlayer;
 import inf101.v18.rogue101.objects.Key;
+import inf101.v18.rogue101.objects.MonsterNS;
 import inf101.v18.rogue101.objects.Wall;
 import inf101.v18.rogue101.player.Player;
 import javafx.scene.canvas.GraphicsContext;
@@ -65,7 +66,7 @@ public class Game implements IGame {
 	private int numPlayers = 0;
 	private boolean options;
 	private String[] log;
-	private int nextLevel = 2;
+	private int currentLevel = 1;
 
 	public Game(Screen screen, ITurtle painter, Printer printer) {
 		this.painter = painter;
@@ -83,7 +84,7 @@ public class Game implements IGame {
 		// inputGrid will be filled with single-character strings indicating what (if
 		// anything)
 		// should be placed at that map square
-		IGrid<String> inputGrid = MapReader.readFile("maps/startlevel.txt");
+		IGrid<String> inputGrid = MapReader.readFile("maps/testlevel.txt");
 		if (inputGrid == null) {
 			System.err.println("Map not found – falling back to builtin map");
 			inputGrid = MapReader.readString(Main.BUILTIN_MAP);
@@ -235,7 +236,7 @@ public class Game implements IGame {
 						//check if player is on exit location and has a key
 						if (getLocalItems().size() > 0)
 							if (getLocalItems().get(0) instanceof Exit && ((IPlayer)currentActor).useKey())
-								newLevel(nextLevel++);
+								newLevel(++currentLevel);
 						
 						// For the human player, we need to wait for input, so we just return.
 						// Further keypresses will cause keyPressed() to be called, and once the human
@@ -286,11 +287,16 @@ public class Game implements IGame {
 		
 		IItem item = null;
 		for (ILocation loc : inputGrid.locations()) {
-			item = createItem(inputGrid.get(loc));
-			
-			if (item instanceof IPlayer) {
+			if (inputGrid.get(loc).equals("@")) {
 				item = player;
-			}
+			} else
+				item = createItem(inputGrid.get(loc));
+			
+//			item = createItem(inputGrid.get(loc));
+//			
+//			if (item instanceof IPlayer) {
+//				item = player;
+//			}
 			
 			if (item != null) {
 				map.add(loc, item);
@@ -298,7 +304,7 @@ public class Game implements IGame {
 		}
 		
 		displayMessage("Loaded level " + n);
-		
+		draw();
 		beginTurn();
 	}
 	
@@ -365,6 +371,8 @@ public class Game implements IGame {
 			return new Exit();
 		case "K":
 			return new Key();
+		case "N":
+			return new MonsterNS(this);
 		case " ":
 			return null;
 		default:
@@ -437,6 +445,10 @@ public class Game implements IGame {
 	// used by PlayerTest.java
 	public String getLogLine(int i) {
 		return log[i];
+	}
+	
+	public int getCurrentLevel() {
+		return currentLevel;
 	}
 
 	public void draw() {

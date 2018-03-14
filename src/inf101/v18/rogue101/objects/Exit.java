@@ -16,7 +16,7 @@ public class Exit implements IItem {
 	 * 
 	 */
 	
-	private static int health;
+	private int health;
 	
 	public Exit() {
 		this.health = getMaxHealth();

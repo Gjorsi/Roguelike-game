@@ -42,6 +42,24 @@ class PlayerTest {
 		player.keyPressed(game, KeyCode.UP);
 		// see that we moved north
 		assertEquals(loc.go(GridDirection.NORTH), game.getLocation());
+		
+		loc = game.getLocation();
+		player.keyPressed(game, KeyCode.UP);
+		// player should not be able to move UP from this pos (wall), check that pos is not changed after trying
+		assertEquals(loc, game.getLocation());
+		
+		game.doTurn();
+		
+		player.keyPressed(game, KeyCode.RIGHT);
+		// see that we moved east
+		assertEquals(loc.go(GridDirection.EAST), game.getLocation());
+		
+		loc = game.getLocation();
+		player.keyPressed(game, KeyCode.DOWN);
+		// player should not be able to move DOWN from this pos (another actor in the way)
+		assertNotEquals(loc.go(GridDirection.SOUTH), game.getLocation());
+		
+		
 	}
 	
 	@Test

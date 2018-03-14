@@ -30,6 +30,7 @@ import inf101.v18.rogue101.objects.IActor;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.INonPlayer;
 import inf101.v18.rogue101.objects.IPlayer;
+import inf101.v18.rogue101.objects.Key;
 import inf101.v18.rogue101.objects.Wall;
 import inf101.v18.rogue101.player.Player;
 import javafx.scene.canvas.GraphicsContext;
@@ -64,6 +65,7 @@ public class Game implements IGame {
 	private int numPlayers = 0;
 	private boolean options;
 	private String[] log;
+	private int nextLevel = 2;
 
 	public Game(Screen screen, ITurtle painter, Printer printer) {
 		this.painter = painter;
@@ -81,7 +83,7 @@ public class Game implements IGame {
 		// inputGrid will be filled with single-character strings indicating what (if
 		// anything)
 		// should be placed at that map square
-		IGrid<String> inputGrid = MapReader.readFile("maps/level1.txt");
+		IGrid<String> inputGrid = MapReader.readFile("maps/startlevel.txt");
 		if (inputGrid == null) {
 			System.err.println("Map not found – falling back to builtin map");
 			inputGrid = MapReader.readString(Main.BUILTIN_MAP);
@@ -123,13 +125,14 @@ public class Game implements IGame {
 		}
 		
 		// give controller instructions
-		String[] instructions = new String[6];
+		String[] instructions = new String[7];
 		instructions[0] = "Controls:";
 		instructions[1] = "Arrows = move";
 		instructions[2] = "I = show inventory";
 		instructions[3] = "C = drop item";
 		instructions[4] = "E = pick up item";
 		instructions[5] = "X = attack";
+		instructions[6] = "Find a key and use it to advance.";
 		displayOptions(instructions);
 	}
 	
@@ -229,10 +232,10 @@ public class Game implements IGame {
 						currentLocation = null;
 					} else {
 						
-						//check if player is on exit location
+						//check if player is on exit location and has a key
 						if (getLocalItems().size() > 0)
-							if (getLocalItems().get(0) instanceof Exit)
-								newLevel(2);
+							if (getLocalItems().get(0) instanceof Exit && ((IPlayer)currentActor).useKey())
+								newLevel(nextLevel++);
 						
 						// For the human player, we need to wait for input, so we just return.
 						// Further keypresses will cause keyPressed() to be called, and once the human
@@ -360,6 +363,8 @@ public class Game implements IGame {
 			return new Player();
 		case "E":
 			return new Exit();
+		case "K":
+			return new Key();
 		case " ":
 			return null;
 		default:

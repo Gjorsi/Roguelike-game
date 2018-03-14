@@ -64,7 +64,7 @@ public class Exit implements IItem {
 	@Override
 	public int getSize() {
 		// TODO Auto-generated method stub
-		return 6;
+		return 4;
 	}
 
 	/* (non-Javadoc)
@@ -89,5 +89,7 @@ public class Exit implements IItem {
 	public int getWeight() {
 		return 1000;
 	}
+	
+
 
 }

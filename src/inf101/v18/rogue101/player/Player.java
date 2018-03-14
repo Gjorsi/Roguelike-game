@@ -12,6 +12,7 @@ import inf101.v18.grid.GridDirection;
 import inf101.v18.rogue101.game.IGame;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.IPlayer;
+import inf101.v18.rogue101.objects.Key;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -115,6 +116,16 @@ public class Player implements IPlayer {
 	@Override
 	public String getSymbol() {
 		return "🤖";
+	}
+	
+	public boolean useKey() {
+		for (IItem item : pItems) {
+			if (item instanceof Key)
+				pItems.remove(item);
+				return true;
+		}
+		
+		return false;
 	}
 
 	

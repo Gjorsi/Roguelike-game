@@ -23,5 +23,17 @@ public interface IPlayer extends IActor {
 	 */
 	void keyPressed(IGame game, KeyCode key);
 	
+	/**
+	 * Shows status of player below game grid; health, attack, defence etc
+	 * 
+	 * @param game
+	 */
 	void showStatus(IGame game);
+
+	/**
+	 * check if player has a key
+	 * 
+	 * @return true if player has a key in inventory
+	 */
+	boolean useKey();
 }

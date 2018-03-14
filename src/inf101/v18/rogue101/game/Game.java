@@ -69,7 +69,6 @@ public class Game implements IGame {
 		this.painter = painter;
 		this.printer = printer;
 		this.options = false;
-		this.log = new String[20];
 
 		// TODO: (*very* optional) for advanced factory technique, use
 		// something like "itemFactories.put("R", () -> new Rabbit());"
@@ -95,6 +94,29 @@ public class Game implements IGame {
 			}
 		}
 		
+		initializeLog();
+		
+	}
+
+	public Game(String mapString) {
+		printer = new Printer(1280, 720);
+		painter = new TurtlePainter(1280, 720);
+		IGrid<String> inputGrid = MapReader.readString(mapString);
+		this.map = new GameMap(inputGrid.getArea());
+		for (ILocation loc : inputGrid.locations()) {
+			IItem item = createItem(inputGrid.get(loc));
+			if (item != null) {
+				map.add(loc, item);
+			}
+		}
+		
+		initializeLog();
+		
+	}
+	
+	
+	public void initializeLog() {
+		this.log = new String[20];
 		// initialise log
 		for (int i=0; i<log.length; i++) {
 			log[i] = "";
@@ -109,20 +131,6 @@ public class Game implements IGame {
 		instructions[4] = "E = pick up item";
 		instructions[5] = "X = attack";
 		displayOptions(instructions);
-
-	}
-
-	public Game(String mapString) {
-		printer = new Printer(1280, 720);
-		painter = new TurtlePainter(1280, 720);
-		IGrid<String> inputGrid = MapReader.readString(mapString);
-		this.map = new GameMap(inputGrid.getArea());
-		for (ILocation loc : inputGrid.locations()) {
-			IItem item = createItem(inputGrid.get(loc));
-			if (item != null) {
-				map.add(loc, item);
-			}
-		}
 	}
 	
 	@Override

@@ -87,8 +87,7 @@ public class Main extends Application {
 		painter = screen.createPainter();
 		printer.setTextMode(MAIN_TEXT_MODE, true);
 		
-		// Font with emojis – need separate download
-		// printer.setFont(Printer.FONT_SYMBOLA);
+		printer.setFont(Printer.FONT_SYMBOLA);
 		
 		if (grid)
 			printer.drawCharCells();

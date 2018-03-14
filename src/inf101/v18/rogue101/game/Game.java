@@ -25,6 +25,7 @@ import inf101.v18.rogue101.map.IGameMap;
 import inf101.v18.rogue101.map.IMapView;
 import inf101.v18.rogue101.map.MapReader;
 import inf101.v18.rogue101.objects.Dust;
+import inf101.v18.rogue101.objects.Exit;
 import inf101.v18.rogue101.objects.IActor;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.INonPlayer;
@@ -81,7 +82,7 @@ public class Game implements IGame {
 		// inputGrid will be filled with single-character strings indicating what (if
 		// anything)
 		// should be placed at that map square
-		IGrid<String> inputGrid = MapReader.readFile("maps/level1.txt");
+		IGrid<String> inputGrid = MapReader.readFile("maps/startlevel.txt");
 		if (inputGrid == null) {
 			System.err.println("Map not found – falling back to builtin map");
 			inputGrid = MapReader.readString(Main.BUILTIN_MAP);
@@ -221,8 +222,9 @@ public class Game implements IGame {
 					} else {
 						
 						//check if player is on exit location
-						if (currentLocation.getX() == 1 && currentLocation.getY() == 1)
-							newLevel(2);
+						if (getLocalItems().size() > 0)
+							if (getLocalItems().get(0) instanceof Exit)
+								newLevel(2);
 						
 						// For the human player, we need to wait for input, so we just return.
 						// Further keypresses will cause keyPressed() to be called, and once the human
@@ -264,7 +266,6 @@ public class Game implements IGame {
 		//clear actors from previous level
 		actors.clear();
 		
-		
 		IGrid<String> inputGrid = MapReader.readFile("maps/level" + n + ".txt");
 		if (inputGrid == null) {
 			System.err.println("Map not found – falling back to builtin map");
@@ -274,15 +275,18 @@ public class Game implements IGame {
 		
 		IItem item = null;
 		for (ILocation loc : inputGrid.locations()) {
-			if (inputGrid.get(loc) == "@")
+			item = createItem(inputGrid.get(loc));
+			
+			if (item instanceof IPlayer) {
 				item = player;
-			else 
-				item = createItem(inputGrid.get(loc));
+			}
 			
 			if (item != null) {
 				map.add(loc, item);
 			}
 		}
+		
+		displayMessage("Loaded level " + n);
 		
 		beginTurn();
 	}
@@ -346,6 +350,8 @@ public class Game implements IGame {
 			return new Mushroom();
 		case "@":
 			return new Player();
+		case "E":
+			return new Exit();
 		case " ":
 			return null;
 		default:

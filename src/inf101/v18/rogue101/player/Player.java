@@ -114,7 +114,7 @@ public class Player implements IPlayer {
 	 */
 	@Override
 	public String getSymbol() {
-		return "@";
+		return "🤖";
 	}
 
 	

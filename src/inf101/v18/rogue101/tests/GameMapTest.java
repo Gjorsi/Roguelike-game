@@ -24,6 +24,7 @@ class GameMapTest {
 		GameMap gameMap = new GameMap(20, 20);
 		ILocation location = gameMap.getLocation(10, 10);
 		
+		// insert 20 random items at location
 		for (int i=0;i<20;i++) {
 			if (random.nextInt(40) < 10)
 				gameMap.add(location, new Carrot());
@@ -37,9 +38,13 @@ class GameMapTest {
 		
 		List<IItem> items = gameMap.getAll(location);
 		
+		// check that each item is larger or equal in size to next item
 		for (int i=0;i<items.size()-1;i++) {
 			assertTrue(items.get(i).compareTo(items.get(i+1)) >= 0);
 		}
+		
+		// check that there are exactly 20 items
+		assertTrue(gameMap.getAll(location).size() == 20);
 	}
 	
 	@Test

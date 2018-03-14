@@ -68,7 +68,6 @@ public class GameMap implements IGameMap {
 		}
 		
 		list.add(list.size(), item);
-		// TODO: should be sorted!
 	}
 
 	@Override

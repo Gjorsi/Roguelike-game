@@ -10,14 +10,18 @@ public class Sword implements IEquipment {
 	
 	private Random random = new Random();
 	private int modifyAttack;
-	private int modifyViewRange;
+	private int modifyViewRange = 0;
 	private String name = "Sword";
 	
 	public Sword(int level) {
 		this.health = getMaxHealth();
 		this.modifyAttack = random.nextInt(level+1);
 		
-		this.modifyViewRange = random.nextInt(10)/4;
+		int n = random.nextInt(10);
+		if (n>6 && n<9)
+			this.modifyViewRange = 1;
+		if (n>8)
+			this.modifyViewRange = 2;
 		
 		if (modifyViewRange == 1)
 			name = "Glowing " + name;

@@ -166,8 +166,8 @@ public class Player implements IPlayer {
 	@Override
 	public void keyPressed(IGame game, KeyCode key) {
 		
-		// hvis game ikke venter på option valg, godta vanlige tastetrykk,
-		// ellers godtas kun "digit" taster
+		// if game is not waiting for options choice, accept keys as follows
+		// otherwise digit keys only
 		if (!game.getOptions()) {
 			switch (key) {
 			case LEFT:
@@ -266,13 +266,15 @@ public class Player implements IPlayer {
 			viewRange += sword.modifyViewRange();
 			
 		} else {
+			double healthStatus = (double)health/maxHealth;
+			
 			if (armour != null) {
 				pItems.add(armour);
 				defence -= armour.modifyDefence();
 				viewRange -= armour.modifyViewRange();
 				maxHealth -= armour.modifyMaxHealth();
 				
-				// control health after max changes
+				// control health after maxHealth changes
 				if (health >= maxHealth) 
 					health = maxHealth;
 			}
@@ -283,8 +285,8 @@ public class Player implements IPlayer {
 			viewRange += armour.modifyViewRange();
 			maxHealth += armour.modifyMaxHealth();
 			
-			// increase health by amount added to max
-			health += armour.modifyMaxHealth();
+			// set health to same percentile it was before changing armour
+			health = (int) (maxHealth*healthStatus);
 		}
 		
 		game.displayOptions(new String[] {"Equipped " + equipment.get(i).getName()});
@@ -492,6 +494,9 @@ public class Player implements IPlayer {
 			for (IItem item : game.getItems(game.getLocation())) {
 				if (item instanceof Battery) {
 					health += item.handleDamage(game, this, 100);
+					
+					if (health > maxHealth)
+						health = maxHealth;
 				}
 			}
 			

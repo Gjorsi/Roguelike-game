@@ -137,7 +137,8 @@ B7 b)
 
 ## IEquipment interface
  
- 
+## TODO
+* fiks Battery slik at det forsvinner på en bedre måte når brukt
  
  
  

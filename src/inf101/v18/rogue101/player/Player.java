@@ -24,6 +24,7 @@ import javafx.scene.input.KeyEvent;
 public class Player implements IPlayer {
 
 	private String name;
+	private int maxHealth = 100;
 	private int health;
 	private int attack;
 	private int defence;
@@ -34,6 +35,7 @@ public class Player implements IPlayer {
 	private List<GridDirection> validDirections;
 	private List<IItem> possibleTargets;
 	private int chosenDir;
+	private int viewRange;
 	
 	/**
 	 * 
@@ -47,6 +49,7 @@ public class Player implements IPlayer {
 		this.attack = 1;
 		this.validDirections = new ArrayList<>();
 		this.possibleTargets = new ArrayList<>();
+		this.viewRange = 2;
 		
 	}
 
@@ -88,7 +91,7 @@ public class Player implements IPlayer {
 	 */
 	@Override
 	public int getMaxHealth() {
-		return 100;
+		return maxHealth;
 	}
 
 	
@@ -107,6 +110,10 @@ public class Player implements IPlayer {
 	@Override
 	public int getSize() {
 		return 5;
+	}
+	
+	public int getViewRange() {
+		return viewRange;
 	}
 
 	

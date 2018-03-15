@@ -24,6 +24,7 @@ import inf101.v18.rogue101.map.GameMap;
 import inf101.v18.rogue101.map.IGameMap;
 import inf101.v18.rogue101.map.IMapView;
 import inf101.v18.rogue101.map.MapReader;
+import inf101.v18.rogue101.objects.Armour;
 import inf101.v18.rogue101.objects.Dust;
 import inf101.v18.rogue101.objects.Exit;
 import inf101.v18.rogue101.objects.IActor;
@@ -32,6 +33,7 @@ import inf101.v18.rogue101.objects.INonPlayer;
 import inf101.v18.rogue101.objects.IPlayer;
 import inf101.v18.rogue101.objects.Key;
 import inf101.v18.rogue101.objects.MonsterNS;
+import inf101.v18.rogue101.objects.Sword;
 import inf101.v18.rogue101.objects.Wall;
 import inf101.v18.rogue101.player.Player;
 import javafx.scene.canvas.GraphicsContext;
@@ -381,6 +383,10 @@ public class Game implements IGame {
 			return new Key();
 		case "N":
 			return new MonsterNS(this);
+		case "S":
+			return new Sword(currentLevel);
+		case "A":
+			return new Armour(currentLevel);
 		case " ":
 			return null;
 		default:
@@ -460,7 +466,7 @@ public class Game implements IGame {
 	}
 
 	public void draw() {
-		map.draw(painter, printer, map.getVisibleLocs(playerLoc, 3));
+		map.draw(painter, printer, map.getVisibleLocs(playerLoc, ((Player) getActorAt(playerLoc)).getViewRange()));
 	}
 
 	@Override

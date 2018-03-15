@@ -47,6 +47,7 @@ public class Rabbit implements INonPlayer {
 //				possibleMoves.add(dir);
 //		}
 		
+		
 		for (GridDirection dir : GridDirection.FOUR_DIRECTIONS) {
 			if (game.getActorAt(game.getLocation(dir)) instanceof IPlayer) {
 				game.attack(dir, game.getActorAt(game.getLocation(dir)));

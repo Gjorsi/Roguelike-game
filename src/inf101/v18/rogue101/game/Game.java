@@ -25,6 +25,7 @@ import inf101.v18.rogue101.map.IGameMap;
 import inf101.v18.rogue101.map.IMapView;
 import inf101.v18.rogue101.map.MapReader;
 import inf101.v18.rogue101.objects.Armour;
+import inf101.v18.rogue101.objects.Battery;
 import inf101.v18.rogue101.objects.Dust;
 import inf101.v18.rogue101.objects.Exit;
 import inf101.v18.rogue101.objects.IActor;
@@ -33,6 +34,7 @@ import inf101.v18.rogue101.objects.INonPlayer;
 import inf101.v18.rogue101.objects.IPlayer;
 import inf101.v18.rogue101.objects.Key;
 import inf101.v18.rogue101.objects.MonsterNS;
+import inf101.v18.rogue101.objects.MonsterWE;
 import inf101.v18.rogue101.objects.Sword;
 import inf101.v18.rogue101.objects.Wall;
 import inf101.v18.rogue101.player.Player;
@@ -300,6 +302,7 @@ public class Game implements IGame {
 		for (ILocation loc : inputGrid.locations()) {
 			if (inputGrid.get(loc).equals("@")) {
 				item = player;
+				playerLoc = loc;
 			} else
 				item = createItem(inputGrid.get(loc));
 			
@@ -384,8 +387,12 @@ public class Game implements IGame {
 			return new Key();
 		case "N":
 			return new MonsterNS(this);
+		case "W":
+			return new MonsterWE(this);
 		case "S":
 			return new Sword(currentLevel);
+		case "B":
+			return new Battery(currentLevel);
 		case "A":
 			return new Armour(currentLevel);
 		case " ":
@@ -467,6 +474,11 @@ public class Game implements IGame {
 	}
 
 	public void draw() {
+		
+//		System.out.println(playerLoc);
+//		System.out.println(getActorAt(playerLoc).getName());
+//		System.out.println(map.getVisibleLocs(playerLoc, 2));
+		
 		map.draw(painter, printer, map.getVisibleLocs(playerLoc, ((Player) getActorAt(playerLoc)).getViewRange()));
 	}
 

@@ -3,14 +3,14 @@ package inf101.v18.rogue101.objects;
 import inf101.v18.grid.GridDirection;
 import inf101.v18.rogue101.game.IGame;
 
-public class MonsterNS implements IMonster {
+public class MonsterWE implements IMonster {
 	private int health;
 	private int maxHealth;
 	private int attack;
 	private int defence;
 	private int size;
 	private boolean north = true;
-	public MonsterNS(IGame game) {
+	public MonsterWE(IGame game) {
 		this.maxHealth = 15*game.getCurrentLevel();
 		this.health = getMaxHealth();
 		this.attack = game.getCurrentLevel();
@@ -22,21 +22,21 @@ public class MonsterNS implements IMonster {
 	public void doTurn(IGame game) {
 		if (!huntPlayer(game)) {
 			if (north) {
-				if (game.canGo(GridDirection.NORTH)) {
-					game.move(GridDirection.NORTH);
+				if (game.canGo(GridDirection.EAST)) {
+					game.move(GridDirection.EAST);
 				} else {
 					north = false;
-					if (game.canGo(GridDirection.SOUTH)) {
-						game.move(GridDirection.SOUTH);
+					if (game.canGo(GridDirection.WEST)) {
+						game.move(GridDirection.WEST);
 					}
 				}
 			} else {
-				if (game.canGo(GridDirection.SOUTH)) {
-					game.move(GridDirection.SOUTH);
+				if (game.canGo(GridDirection.WEST)) {
+					game.move(GridDirection.WEST);
 				} else {
 					north = true;
-					if (game.canGo(GridDirection.NORTH)) {
-						game.move(GridDirection.NORTH);
+					if (game.canGo(GridDirection.EAST)) {
+						game.move(GridDirection.EAST);
 					}
 				}
 			}

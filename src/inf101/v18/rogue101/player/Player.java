@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 
 import inf101.v18.grid.GridDirection;
 import inf101.v18.rogue101.game.IGame;
+import inf101.v18.rogue101.objects.Battery;
 import inf101.v18.rogue101.objects.IEquipment;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.IPlayer;
@@ -56,7 +57,7 @@ public class Player implements IPlayer {
 		this.validDirections = new ArrayList<>();
 		this.possibleTargets = new ArrayList<>();
 		this.equipment = new ArrayList<>();
-		this.viewRange = 2;
+		this.viewRange = 3;
 		
 	}
 
@@ -199,7 +200,6 @@ public class Player implements IPlayer {
 			default:
 				break;
 			}
-			
 			showStatus(game);
 		} else {
 			if (key.isDigitKey()) {
@@ -227,10 +227,12 @@ public class Player implements IPlayer {
 						game.clearMessages();
 						game.attack(validDirections.get(chosenDir), possibleTargets.get(digit-1));
 						game.changeOptions();
+						showStatus(game);
 						break;
 					case equip:
 						equip(game, digit-1);
 						game.changeOptions();
+						showStatus(game);
 					default:
 						break;
 					}
@@ -486,6 +488,13 @@ public class Player implements IPlayer {
 		if (game.canGo(dir)) {
 			game.clearMessages();
 			game.move(dir);
+			
+			for (IItem item : game.getItems(game.getLocation())) {
+				if (item instanceof Battery) {
+					health += item.handleDamage(game, this, 100);
+				}
+			}
+			
 		} else
 			game.displayMessage("Nope.");
 	}

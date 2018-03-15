@@ -22,7 +22,7 @@ public interface IGameMap extends IMapView {
 	 * @param painter
 	 * @param printer
 	 */
-	void draw(ITurtle painter, Printer printer);
+	void draw(ITurtle painter, Printer printer, Set<ILocation> visible);
 
 	/**
 	 * Get a modifiable list of items
@@ -45,5 +45,7 @@ public interface IGameMap extends IMapView {
 	 * @param item
 	 */
 	void remove(ILocation loc, IItem item);
+
+	Set<ILocation> getVisibleLocs(ILocation loc, int dist);
 
 }

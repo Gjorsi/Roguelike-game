@@ -20,7 +20,7 @@ import javafx.util.Duration;
 
 public class Main extends Application {
 	// you might want to tune these options
-	public static final boolean MAIN_USE_BACKGROUND_GRID = true;
+	public static final boolean MAIN_USE_BACKGROUND_GRID = false;
 	public static final boolean MAP_AUTO_SCALE_ITEM_DRAW = true;
 	public static final boolean MAP_DRAW_ONLY_DIRTY_CELLS = false;
 	public static final TextMode MAIN_TEXT_MODE = TextMode.MODE_80X25;

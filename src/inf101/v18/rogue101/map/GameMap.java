@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +21,7 @@ import inf101.v18.rogue101.game.IllegalMoveException;
 import inf101.v18.rogue101.objects.IActor;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.Wall;
+import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
 
 public class GameMap implements IGameMap {
@@ -31,8 +33,7 @@ public class GameMap implements IGameMap {
 	 * These locations have changed, and need to be redrawn
 	 */
 	private final Set<ILocation> dirtyLocs = new HashSet<>();
-	
-	private List<ILocation> visibleLocs;
+
 	/**
 	 * An index of all the items in the map and their locations.
 	 */
@@ -89,7 +90,7 @@ public class GameMap implements IGameMap {
 	}
 
 	@Override
-	public void draw(ITurtle painter, Printer printer) {
+	public void draw(ITurtle painter, Printer printer, Set<ILocation> visible) {
 		Iterable<ILocation> cells;
 		if (Main.MAP_DRAW_ONLY_DIRTY_CELLS) {
 			if (dirtyLocs.isEmpty())
@@ -127,7 +128,16 @@ public class GameMap implements IGameMap {
 						sym = list.get(0).getPrintSymbol();
 					}
 				}
+				
+				
+				
 				printer.printAt(loc.getX() + 1, loc.getY() + 1, sym);
+				
+				if (!visible.contains(loc)) {
+					painter.jumpTo((loc.getX() + 0.5) * w, (loc.getY() + 0.5) * h);
+					painter.shape().rectangle().width(w).height(h).fillPaint(Color.BLACK).fill();
+				}
+				
 			}
 		} finally {
 			if (Main.MAP_AUTO_SCALE_ITEM_DRAW) {
@@ -253,6 +263,29 @@ public class GameMap implements IGameMap {
 	}
 
 	@Override
+	public Set<ILocation> getVisibleLocs(ILocation loc, int dist) {
+		Set<ILocation> visible = new HashSet<ILocation>(getNeighbourhood(loc, dist));
+		
+		// add players loc
+		visible.add(loc);
+		
+		Iterator<ILocation> it = visible.iterator();
+		
+		while (it.hasNext()) {
+			if (it.next().geometricDistanceTo(loc) > dist)
+				it.remove();
+		}
+		
+		
+//		for (ILocation locs : visible) {
+//			if (locs.geometricDistanceTo(loc) > dist)
+//				visible.remove(locs);
+//		}
+		
+		return visible;
+	}
+	
+	@Override
 	public List<ILocation> getNeighbourhood(ILocation loc, int dist) {
 		if (dist < 0 || loc == null)
 			throw new IllegalArgumentException();
@@ -261,8 +294,11 @@ public class GameMap implements IGameMap {
 
 		List<ILocation> locs = new ArrayList<>();
 		
-		for (int x=loc.getX()-dist; x<=loc.getX()+dist && x<grid.getWidth(); x++) {
-			for (int y=loc.getY()-dist; y<=loc.getY()+dist && y<grid.getHeight(); y++) {
+		int startX = loc.getX()-dist >= 0 ? loc.getX()-dist : 0;
+		int startY = loc.getY()-dist >= 0 ? loc.getY()-dist : 0;
+		
+		for (int x=startX; x<=loc.getX()+dist && x<grid.getWidth(); x++) {
+			for (int y=startY; y<=loc.getY()+dist && y<grid.getHeight(); y++) {
 				if (!(x == loc.getX() && y == loc.getY())) {
 					locs.add(getLocation(x, y));
 				}
@@ -292,6 +328,7 @@ public class GameMap implements IGameMap {
 		
 		return sortedLocs;
 	}
+
 }
 
 

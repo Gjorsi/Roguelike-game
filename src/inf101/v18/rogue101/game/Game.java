@@ -67,6 +67,7 @@ public class Game implements IGame {
 	private boolean options;
 	private String[] log;
 	private int currentLevel = 1;
+	private ILocation playerLoc;
 
 	public Game(Screen screen, ITurtle painter, Printer printer) {
 		this.painter = painter;
@@ -95,6 +96,9 @@ public class Game implements IGame {
 			if (item != null) {
 				map.add(loc, item);
 			}
+			
+			if (item instanceof IPlayer)
+				playerLoc = map.getLocation(item);
 		}
 		
 		initializeLog();
@@ -233,6 +237,7 @@ public class Game implements IGame {
 						currentLocation = null;
 					} else {
 						
+						playerLoc = currentLocation;
 						//check if player is on exit location and has a key
 						if (getLocalItems().size() > 0)
 							if (getLocalItems().get(0) instanceof Exit && ((IPlayer)currentActor).useKey())
@@ -455,7 +460,7 @@ public class Game implements IGame {
 	}
 
 	public void draw() {
-		map.draw(painter, printer);
+		map.draw(painter, printer, map.getVisibleLocs(playerLoc, 3));
 	}
 
 	@Override

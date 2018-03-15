@@ -1,6 +1,7 @@
 package inf101.v18.rogue101.map;
 
 import java.util.List;
+import java.util.Set;
 
 import inf101.v18.gfx.gfxmode.ITurtle;
 import inf101.v18.gfx.textmode.Printer;

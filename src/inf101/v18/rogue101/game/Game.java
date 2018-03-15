@@ -252,17 +252,18 @@ public class Game implements IGame {
 					displayDebug("doTurn(): Hmm, this is a very strange actor: " + currentActor);
 				}
 				
+				// A3 Bedre Gulrøtter c)
 				//possibly add a new Carrot (if there is no carrot at chosen random loc, and there are less than 9 items at loc)
-				A: if (random.nextInt(100) < 5) {
-					ILocation newCarrotLoc = map.getLocation(random.nextInt(getWidth()), random.nextInt(getHeight()));
-					if (map.canGo(newCarrotLoc) && map.getItems(newCarrotLoc).size() < 9) {
-						for (IItem item : getItems(newCarrotLoc)) {
-							if (item instanceof Carrot)
-								break A;
-						}
-						map.add(newCarrotLoc, new Carrot());
-					}
-				}
+//				A: if (random.nextInt(100) < 5) {
+//					ILocation newCarrotLoc = map.getLocation(random.nextInt(getWidth()), random.nextInt(getHeight()));
+//					if (map.canGo(newCarrotLoc) && map.getItems(newCarrotLoc).size() < 9) {
+//						for (IItem item : getItems(newCarrotLoc)) {
+//							if (item instanceof Carrot)
+//								break A;
+//						}
+//						map.add(newCarrotLoc, new Carrot());
+//					}
+//				}
 					
 			}
 		} while (numPlayers > 0); // we can safely repeat if we have players, since we'll return (and break out of
@@ -277,6 +278,8 @@ public class Game implements IGame {
 		
 		//clear actors from previous level
 		actors.clear();
+		currentActor = null;
+		currentLocation = null;
 		
 		IGrid<String> inputGrid = MapReader.readFile("maps/level" + n + ".txt");
 		if (inputGrid == null) {
@@ -304,8 +307,8 @@ public class Game implements IGame {
 		}
 		
 		displayMessage("Loaded level " + n);
-		draw();
-		beginTurn();
+//		draw();
+//		beginTurn();
 	}
 	
 	/**

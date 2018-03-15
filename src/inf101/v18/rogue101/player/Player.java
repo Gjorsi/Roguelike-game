@@ -120,9 +120,10 @@ public class Player implements IPlayer {
 	
 	public boolean useKey() {
 		for (IItem item : pItems) {
-			if (item instanceof Key)
+			if (item instanceof Key) {
 				pItems.remove(item);
 				return true;
+			}
 		}
 		
 		return false;

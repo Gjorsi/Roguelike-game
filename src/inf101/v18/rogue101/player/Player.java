@@ -10,9 +10,11 @@ import java.util.function.Predicate;
 
 import inf101.v18.grid.GridDirection;
 import inf101.v18.rogue101.game.IGame;
+import inf101.v18.rogue101.objects.IEquipment;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.IPlayer;
 import inf101.v18.rogue101.objects.Key;
+import inf101.v18.rogue101.objects.Sword;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -30,12 +32,16 @@ public class Player implements IPlayer {
 	private int defence;
 	private List<IItem> pItems;
 	private int nOptions;
-	private enum opt {pickUp, drop, attackDir, attackTar};
+	private enum opt {pickUp, drop, attackDir, attackTar, equip};
 	private opt currentOpt;
 	private List<GridDirection> validDirections;
 	private List<IItem> possibleTargets;
 	private int chosenDir;
 	private int viewRange;
+	private List<IEquipment> equipment;
+	
+	private IEquipment armour = null;
+	private IEquipment sword = null;
 	
 	/**
 	 * 
@@ -49,6 +55,7 @@ public class Player implements IPlayer {
 		this.attack = 1;
 		this.validDirections = new ArrayList<>();
 		this.possibleTargets = new ArrayList<>();
+		this.equipment = new ArrayList<>();
 		this.viewRange = 2;
 		
 	}
@@ -174,7 +181,7 @@ public class Player implements IPlayer {
 			case DOWN:
 				tryToMove(game, GridDirection.SOUTH);
 				break;
-			case E:
+			case P:
 				tryPickUp(game);
 				break;
 			case C:
@@ -185,6 +192,9 @@ public class Player implements IPlayer {
 				break;
 			case X:
 				tryAttack(game);
+				break;
+			case E:
+				tryEquip(game);
 				break;
 			default:
 				break;
@@ -218,6 +228,9 @@ public class Player implements IPlayer {
 						game.attack(validDirections.get(chosenDir), possibleTargets.get(digit-1));
 						game.changeOptions();
 						break;
+					case equip:
+						equip(game, digit-1);
+						game.changeOptions();
 					default:
 						break;
 					}
@@ -232,6 +245,82 @@ public class Player implements IPlayer {
 		}
 		
 
+	}
+
+	private void equip(IGame game, int i) {
+		if (equipment.get(i) instanceof Sword) {
+			
+			// if a sword is already equipped, add it to inventory and remove its buffs
+			if (sword != null) {
+				pItems.add(sword);
+				attack -= sword.modifyAttack();
+				viewRange -= sword.modifyViewRange();
+			}
+			
+			// remove new sword from inventory, equip it and add its buffs
+			pItems.remove(equipment.get(i));
+			sword = equipment.get(i);
+			attack += sword.modifyAttack();
+			viewRange += sword.modifyViewRange();
+			
+		} else {
+			if (armour != null) {
+				pItems.add(armour);
+				defence -= armour.modifyDefence();
+				viewRange -= armour.modifyViewRange();
+				maxHealth -= armour.modifyMaxHealth();
+				
+				// control health after max changes
+				if (health >= maxHealth) 
+					health = maxHealth;
+			}
+			
+			pItems.remove(equipment.get(i));
+			armour = equipment.get(i);
+			defence += armour.modifyDefence();
+			viewRange += armour.modifyViewRange();
+			maxHealth += armour.modifyMaxHealth();
+			
+			// increase health by amount added to max
+			health += armour.modifyMaxHealth();
+		}
+		
+		game.displayOptions(new String[] {"Equipped " + equipment.get(i).getName()});
+	}
+
+	private void tryEquip(IGame game) {
+		// if no items in inventory, inform and return
+		if (pItems.isEmpty()) {
+			game.displayMessage("You have nothing to equip.");
+			return;
+		}
+		
+		equipment.clear();
+		// find items in inventory if IEquipment type
+		for (IItem item : pItems) {
+			if (item instanceof IEquipment) {
+				equipment.add((IEquipment)item);
+			}
+		}
+		
+		// if no IEquipment items in inventory, inform and return
+		if (equipment.isEmpty()) {
+			game.displayMessage("You have nothing to equip.");
+			return;
+		}
+		
+		game.changeOptions();
+		currentOpt = opt.equip;
+		nOptions = equipment.size();
+		
+		String[] s = new String[nOptions+1];
+		s[0] = "Choose item to equip:";
+		for (int i=0; i<nOptions; i++) {
+			s[i+1] = String.format("%d - %s", i+1, equipment.get(i).getName());
+		}
+		
+		game.displayOptions(s);
+		
 	}
 
 	// see if there are any targets in GridDirection.FOUR_DIRECTIONS

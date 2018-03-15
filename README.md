@@ -134,6 +134,8 @@ B7 b)
 
 ## IMonster interface
 * 
+
+## IEquipment interface
  
  
  

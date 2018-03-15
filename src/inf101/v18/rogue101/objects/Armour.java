@@ -17,7 +17,7 @@ public class Armour implements IEquipment {
 	public Armour(int level) {
 		
 		this.health = getMaxHealth();
-		this.modifyDefence = random.nextInt(level+1);
+		this.modifyDefence = random.nextInt(level+2);
 		
 		if (modifyDefence > 5) {
 			name = "Plate Mail";
@@ -30,7 +30,8 @@ public class Armour implements IEquipment {
 		}
 		
 		if (random.nextBoolean()) {
-			modifyMaxHealth = random.nextInt(level*20);
+			modifyMaxHealth = random.nextInt(level*20)+10;
+			name += " of Health";
 		} else {
 			modifyMaxHealth = 0;
 		}
@@ -69,25 +70,25 @@ public class Armour implements IEquipment {
 	@Override
 	public int getSize() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	@Override
 	public int getWeight() {
 		// TODO Auto-generated method stub
-		return 0;
+		return modifyDefence*10+40;
 	}
 
 	@Override
 	public String getSymbol() {
 		// TODO Auto-generated method stub
-		return null;
+		return "🛡";
 	}
 
 	@Override
 	public int handleDamage(IGame game, IItem source, int amount) {
-		// TODO Auto-generated method stub
-		return 0;
+		health -= amount;
+		return amount;
 	}
 
 	@Override
@@ -99,19 +100,19 @@ public class Armour implements IEquipment {
 	@Override
 	public int modifyDefence() {
 		// TODO Auto-generated method stub
-		return 0;
+		return modifyDefence;
 	}
 
 	@Override
 	public int modifyViewRange() {
 		// TODO Auto-generated method stub
-		return 0;
+		return modifyViewRange;
 	}
 
 	@Override
 	public int modifyMaxHealth() {
 		// TODO Auto-generated method stub
-		return 0;
+		return modifyMaxHealth;
 	}
 
 }

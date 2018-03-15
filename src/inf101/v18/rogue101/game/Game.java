@@ -132,14 +132,15 @@ public class Game implements IGame {
 		}
 		
 		// give controller instructions
-		String[] instructions = new String[7];
+		String[] instructions = new String[8];
 		instructions[0] = "Controls:";
 		instructions[1] = "Arrows = move";
 		instructions[2] = "I = show inventory";
 		instructions[3] = "C = drop item";
-		instructions[4] = "E = pick up item";
+		instructions[4] = "P = pick up item";
 		instructions[5] = "X = attack";
-		instructions[6] = "Find a key and use it to advance.";
+		instructions[6] = "E = equip an item";
+		instructions[7] = "Find a key and use it to advance.";
 		displayOptions(instructions);
 	}
 	

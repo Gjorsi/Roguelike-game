@@ -101,7 +101,7 @@ public class Game implements IGame {
 		// inputGrid will be filled with single-character strings indicating what (if
 		// anything)
 		// should be placed at that map square
-		IGrid<String> inputGrid = MapReader.readFile("maps/startlevel.txt");
+		IGrid<String> inputGrid = MapReader.readFile("maps/level1.txt");
 		if (inputGrid == null) {
 			System.err.println("Map not found – falling back to builtin map");
 			inputGrid = MapReader.readString(Main.BUILTIN_MAP);
@@ -117,7 +117,7 @@ public class Game implements IGame {
 				playerLoc = map.getLocation(item);
 		}
 		
-		initializeLog();
+		initialiseLog();
 		
 	}
 
@@ -133,19 +133,19 @@ public class Game implements IGame {
 			}
 		}
 		
-		initializeLog();
+		initialiseLog();
 		
 	}
 	
-	
-	public void initializeLog() {
+	/**
+	 * Initialise the String array used by displayOptions() and give game-intro and controller instructions
+	 */
+	public void initialiseLog() {
 		this.log = new String[20];
-		// initialise log
 		for (int i=0; i<log.length; i++) {
 			log[i] = "";
 		}
 		
-		// give game-intro and controller instructions
 		String[] instructions = new String[18];
 		instructions[0] = "You find yourself on an alien planet,";
 		instructions[1] = "sent by the humans 👨‍🚀 of earth to ";
@@ -173,6 +173,9 @@ public class Game implements IGame {
 		map.add(currentLocation, item);
 	}
 	
+	/**
+	 * used by Player when player dies
+	 */
 	public void gameOver() {
 		gameOver = true;
 	}
@@ -323,6 +326,13 @@ public class Game implements IGame {
 		return true;
 	}
 
+	/**
+	 * Load next level when player has reached an exit with a key
+	 * Clears actors, but copies player to keep health status, inventory etc
+	 * 
+	 * @param n
+	 * number of level to load
+	 */
 	private void newLevel(int n) {
 		
 		//save player object
@@ -348,20 +358,12 @@ public class Game implements IGame {
 			} else
 				item = createItem(inputGrid.get(loc));
 			
-//			item = createItem(inputGrid.get(loc));
-//			
-//			if (item instanceof IPlayer) {
-//				item = player;
-//			}
-			
 			if (item != null) {
 				map.add(loc, item);
 			}
 		}
 		
 		displayMessage("Loaded level " + n);
-//		draw();
-//		beginTurn();
 	}
 	
 	/**
@@ -505,28 +507,32 @@ public class Game implements IGame {
 		}
 	}
 	
+	/**
+	 * clear info line below status
+	 */
 	public void clearMessages() {
-//		for (int i=1;i<20;i++) {
-//			printer.clearLine(i);
-//		}
 		printer.clearLine(Main.LINE_MSG1);
 	}
 	
-	// used by PlayerTest.java
+	/**
+	 *  used by PlayerTest.java to get line i in the log
+	 * @param i
+	 * @return log[i]
+	 */
 	public String getLogLine(int i) {
 		return log[i];
 	}
 	
+	/**
+	 * get current level loaded
+	 * 
+	 * @return currentLevel
+	 */
 	public int getCurrentLevel() {
 		return currentLevel;
 	}
 
 	public void draw() {
-		
-//		System.out.println(playerLoc);
-//		System.out.println(getActorAt(playerLoc).getName());
-//		System.out.println(map.getVisibleLocs(playerLoc, 2));
-		
 		map.draw(painter, printer, map.getVisibleLocs(playerLoc, ((Player) getActorAt(playerLoc)).getViewRange()));
 	}
 
@@ -630,11 +636,19 @@ public class Game implements IGame {
 		return map.getWidth();
 	}
 
-	
+	/**
+	 * get whether game is in menu state or not
+	 * 
+	 * @return true if game is in menu state
+	 * 
+	 */
 	public boolean getOptions() {
 		return options;
 	}
 	
+	/**
+	 * Change state from menu to not menu or vice versa
+	 */
 	public void changeOptions() {
 		options = !options;
 	}

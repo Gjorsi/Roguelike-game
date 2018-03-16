@@ -46,6 +46,15 @@ public interface IGameMap extends IMapView {
 	 */
 	void remove(ILocation loc, IItem item);
 
+	/**
+	 * get all locations in a simplified circle around the loc
+	 * 
+	 * @param loc
+	 * center of circle
+	 * @param dist
+	 * approx radius of "circle"
+	 * @return Set<ILocation>
+	 */
 	Set<ILocation> getVisibleLocs(ILocation loc, int dist);
 
 }

@@ -23,7 +23,7 @@ Dette prosjektet inneholder [Semesteroppgave 1](SEM-1.md). Du kan også [lese op
 
 # Fyll inn egne svar/beskrivelse/kommentarer til prosjektet under
 * Levert av:   Carl August Gjørsvik (cgj008)
-* Del A: [ ] helt ferdig, [X] delvis ferdig
+* Del A: [X] helt ferdig, [ ] delvis ferdig
 * Del B: [X] helt ferdig, [ ] delvis ferdig
 * Del C: [ ] helt ferdig, [X] delvis ferdig
 * [ ] hele semesteroppgaven er ferdig og klar til retting!
@@ -117,7 +117,15 @@ kommer valg av target hvis det er mer enn 1.
 ## B7 
 * a) Jeg har ikke benyttet meg av noen andre retninger enn GridDirections.FOUR_DIRECTIONS, eller bruk av grader, så mye er likt.
 Men det er praktisk at game holder styr på currentLocation og kan gi loc i naboceller i retning dir.
-* b) 
+* b) Game har kontroll på kartet og dermed alle objekter som beveger seg på det. Da blir det lettere å la Game avgjøre om en 
+handling skal være lovlig for eksempel. Fordelene er ryddighet og at det blir lettere å produsere nye objekter som skal styres av Game.
+En ulempe er at Game må ha mange metoder som objektene kan bruke.
+* c) game.addItem burde ta høyde for hva som allerede er på posisjonen. Når det gjelder game.drop så er det begrenset i Player,
+hvor mange items en player kan drop'e på samme loc. 
+game.move sjekker ikke om det er mulig å utføre. Før game.move kalles, må det sjekkes mot game.canGo.
+game.setCurrent parameter IActor actor må allerede være på GameMap'et.
+* d) Vanskelig å svare på nå. Har gått en del frem og tilbake for å svare på spørsmål. Gjorde hele B og mye av C før A ble ferdig. 
+
 
 # Del C
 ## Oversikt over designvalg
@@ -127,8 +135,15 @@ Men det er praktisk at game holder styr på currentLocation og kan gi loc i nabo
 * Burde kanskje laget egen branch for å gjøre del C (?), siden jeg har måtte kommentere ut for eksempel løsningen på A3
 Bedre Gulrøtter c) for å jobbe videre.
 
+## Inventory
+* Gjennomført i løpet av Del B stort sett. 
+* Player kan bære opptil 9 items i tillegg til de som er "equipped"
+* Inventory vises i game log ved å trykke 'I'
+
 ## "Fog of war" / mørke
-* 
+* Laget ny metode i IGameMap / GameMap: getVisibleLocs. Denne returnerer et set av locations rundt gjeldende loc i en omtrentlig
+sirkulær form.
+* Brukes av GameMap.draw() for å fylle alle ruter som ikke er med i dette settet med svart = simulert mørke / "fog of war"
 
 ## Vekt
 * lagt inn getWeight i IItem interface
@@ -142,12 +157,18 @@ Bedre Gulrøtter c) for å jobbe videre.
 * Exit-objekt er veien til neste nivå i spillet
 * Player trenger en IItem av type Key for å gå gjennom exit
 
+## newLevel
+* game.newLevel laster neste map (game variabel currentLevel holder styr på hvilket map som skal lastes)
+* kalles når player går på Exit-objekt med key i inventory
+
 ## IMonster interface
 * Felles interface for fiender, inkl metode for å angripe hvis de møter player
-* MonsterNS, MonsterWE, MonsterR
+* MonsterNS - standardisert fiende som skalerer med level, beveger seg kun nord / sør
+* MonsterWE - standardisert fiende som skalerer med level, beveger seg kun vest / øst
+* MonsterR - standardisert fiende som skalerer med level, beveger seg tilfeldige steg
 
 ## IEquipment interface
-
+* Player har 2 "equipment slots" - Armour og Sword
  
  
  

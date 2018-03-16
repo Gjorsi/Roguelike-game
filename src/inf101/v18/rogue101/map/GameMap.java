@@ -129,10 +129,9 @@ public class GameMap implements IGameMap {
 					}
 				}
 				
-				
-				
 				printer.printAt(loc.getX() + 1, loc.getY() + 1, sym);
 				
+				// fill loc with black if not within visible range
 				if (!visible.contains(loc)) {
 					painter.jumpTo((loc.getX() + 0.5) * w, (loc.getY() + 0.5) * h);
 					painter.shape().rectangle().width(w).height(h).fillPaint(Color.BLACK).fill();
@@ -276,12 +275,6 @@ public class GameMap implements IGameMap {
 				it.remove();
 		}
 		
-		
-//		for (ILocation locs : visible) {
-//			if (locs.geometricDistanceTo(loc) > dist)
-//				visible.remove(locs);
-//		}
-		
 		return visible;
 	}
 	
@@ -294,9 +287,11 @@ public class GameMap implements IGameMap {
 
 		List<ILocation> locs = new ArrayList<>();
 		
+		// make sure x and y are not outside grid on negative side
 		int startX = loc.getX()-dist >= 0 ? loc.getX()-dist : 0;
 		int startY = loc.getY()-dist >= 0 ? loc.getY()-dist : 0;
 		
+		// get all locations in the form of a square with sides 1+dist*2 centered on loc, excluding locations outside grid
 		for (int x=startX; x<=loc.getX()+dist && x<grid.getWidth(); x++) {
 			for (int y=startY; y<=loc.getY()+dist && y<grid.getHeight(); y++) {
 				if (!(x == loc.getX() && y == loc.getY())) {

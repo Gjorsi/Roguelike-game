@@ -80,78 +80,61 @@ public class Player implements IPlayer {
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see inf101.v18.rogue101.objects.IActor#getAttack()
-	 */
 	@Override
 	public int getAttack() {
 		return attack;
 	}
 
-	/* (non-Javadoc)
-	 * @see inf101.v18.rogue101.objects.IActor#getDamage()
-	 */
 	@Override
 	public int getDamage() {
 		return getAttack()*8;
 	}
 
-	/* (non-Javadoc)
-	 * @see inf101.v18.rogue101.objects.IItem#getCurrentHealth()
-	 */
 	@Override
 	public int getCurrentHealth() {
 		return health;
 	}
 
-	/* (non-Javadoc)
-	 * @see inf101.v18.rogue101.objects.IItem#getDefence()
-	 */
 	@Override
 	public int getDefence() {
 		return defence;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see inf101.v18.rogue101.objects.IItem#getMaxHealth()
-	 */
 	@Override
 	public int getMaxHealth() {
 		return maxHealth;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see inf101.v18.rogue101.objects.IItem#getName()
-	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see inf101.v18.rogue101.objects.IItem#getSize()
-	 */
 	@Override
 	public int getSize() {
 		return 5;
 	}
 	
+	/**
+	 * Get player's range of sight in the darkness
+	 * 
+	 * @return viewRange
+	 */
 	public int getViewRange() {
 		return viewRange;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see inf101.v18.rogue101.objects.IItem#getSymbol()
-	 */
 	@Override
 	public String getSymbol() {
 		return "🤖";
 	}
 	
+	/**
+	 * if player has a key, remove it and return true
+	 * otherwise, return false
+	 * 
+	 * @return true if player has key
+	 */
 	public boolean useKey() {
 		for (IItem item : pItems) {
 			if (item instanceof Key) {
@@ -163,10 +146,6 @@ public class Player implements IPlayer {
 		return false;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see inf101.v18.rogue101.objects.IItem#handleDamage(inf101.v18.rogue101.game.IGame, inf101.v18.rogue101.objects.IItem, int)
-	 */
 	@Override
 	public int handleDamage(IGame game, IItem source, int amount) {
 		health -= amount;
@@ -179,10 +158,6 @@ public class Player implements IPlayer {
 		return amount;
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see inf101.v18.rogue101.objects.IPlayer#keyPressed(inf101.v18.rogue101.game.IGame, javafx.scene.input.KeyCode)
-	 */
 	@Override
 	public void keyPressed(IGame game, KeyCode key) {
 		
@@ -262,13 +237,16 @@ public class Player implements IPlayer {
 			} else {
 				game.displayMessage("Enter number in range 1 - " + nOptions);
 			}
-			
-
 		}
-		
-
 	}
 
+	/**
+	 * Equip item i in List equipment
+	 * 
+	 * @param game
+	 * @param i
+	 * 
+	 */
 	private void equip(IGame game, int i) {
 		if (equipment.get(i) instanceof Sword) {
 			
@@ -312,6 +290,11 @@ public class Player implements IPlayer {
 		game.displayOptions(new String[] {"Equipped " + equipment.get(i).getName()});
 	}
 
+	/**
+	 * Attempt to equip something, prompts menu choice if there is anything to equip
+	 * 
+	 * @param game
+	 */
 	private void tryEquip(IGame game) {
 		// if no items in inventory, inform and return
 		if (pItems.isEmpty()) {
@@ -320,7 +303,7 @@ public class Player implements IPlayer {
 		}
 		
 		equipment.clear();
-		// find items in inventory if IEquipment type
+		// find items in inventory of IEquipment type
 		for (IItem item : pItems) {
 			if (item instanceof IEquipment) {
 				equipment.add((IEquipment)item);
@@ -346,10 +329,15 @@ public class Player implements IPlayer {
 		game.displayOptions(s);
 		
 	}
-
-	// see if there are any targets in GridDirection.FOUR_DIRECTIONS
-	// if there's only one possible direction to attack, run attackDir
-	// if more than one possible dir, prompt user to choose dir
+	
+	/**
+	 * Check for targets in GridDirection.FOUR_DIRECTIONS.
+	 * If there's only one possible direction to attack, run attackDir().
+	 * If more than one possible dir, prompt user to choose dir.
+	 * KeyPressed will then call attackDir with chosen dir.
+	 * 
+	 * @param game
+	 */
 	private void tryAttack(IGame game) {
 		
 		validDirections.clear();
@@ -386,6 +374,16 @@ public class Player implements IPlayer {
 	}
 
 	// attack dir is decided, now attack target if only 1, otherwise choose
+	
+	/**
+	 * attack direction is decided, now attack target if there is only 1, 
+	 * otherwise prompt user for choice of target
+	 * then KeyPressed will call attackTar with chosen target
+	 * 
+	 * @param game
+	 * @param dir
+	 * chosen or only possible direction to attack
+	 */
 	private void attackDir(IGame game, GridDirection dir) {
 		possibleTargets.clear();
 		possibleTargets = game.allItemsActors(game.getLocation(dir));
@@ -408,14 +406,23 @@ public class Player implements IPlayer {
 		}
 	}
 
+	/**
+	 * attempt to drop an item at current location.
+	 * If there are more than 7 items at location, player cannot drop anything
+	 * If player has only 1 item in inventory, that item will be dropped
+	 * if player has more than 1 item in inventory, prompt user for choice of item to drop
+	 * KeyPressed will call dropItem() with users choice
+	 * 
+	 * @param game
+	 */
 	private void tryDrop(IGame game) {
 		
+		if (game.getLocalItems().size() > 7) {
+			game.displayMessage("Too many items on the ground. Find some other place to drop your trash.");
+			return;
+		}
+		
 		if (pItems.size()>1) {
-			
-			if (game.getLocalItems().size() > 7) {
-				game.displayMessage("Too many items on the ground. You have to find some other place to drop your trash.");
-				return;
-			}
 			
 			String itemOptions[] = new String[pItems.size()+1];
 			itemOptions[0] = "Choose item to drop:";
@@ -439,17 +446,25 @@ public class Player implements IPlayer {
 		
 	}
 	
+	/**
+	 * drop an item at current location
+	 * 
+	 * @param game
+	 * @param n
+	 * position of item in pItems list
+	 */
 	private void dropItem(IGame game, int n) {
 		game.drop(pItems.get(n));
 		pItems.remove(n);
 		game.changeOptions();
 	}
 
+	/**
+	 * Display the contents of player's inventory on the right side of game map
+	 * 
+	 * @param game
+	 */
 	private void displayInventory(IGame game) {
-		
-//		game.getPrinter().moveTo(1, 23);
-//		game.getPrinter().print("TEST TEST");
-		
 		
 		String[] s = new String[Math.max(2, pItems.size()+1)];
 		s[0] = "Inventory:";
@@ -466,17 +481,27 @@ public class Player implements IPlayer {
 		
 	}
 
+	/**
+	 * attempt to pick up an item at current location
+	 * if player inventory is full, return
+	 * if there is only one item at loc, pick it up
+	 * if more than 1 item, prompt user for choice
+	 * KeyPressed will call pickUp() with user choice
+	 * 
+	 * @param game
+	 */
 	private void tryPickUp(IGame game) {
-		List<IItem> availableItems = game.getLocalItems();
-		String itemOptions[] = new String[availableItems.size()+1];
-				
-		itemOptions[0] = "Choose item to attempt to pick up:";
 		
 		//return if inventory is full (more than 8 items)
 		if (pItems.size()>8) {
 			game.displayMessage("Your inventory is full.");
 			return;
 		}
+		
+		List<IItem> availableItems = game.getLocalItems();
+		String itemOptions[] = new String[availableItems.size()+1];
+				
+		itemOptions[0] = "Choose item to attempt to pick up:";
 		
 		if (availableItems.size() == 1) {
 			pItems.add(game.pickUp(availableItems.get(0)));
@@ -499,12 +524,27 @@ public class Player implements IPlayer {
 		
 	}
 	
+	/**
+	 * pick up item chosen by player
+	 * 
+	 * @param game
+	 * @param n
+	 * position of item choice in list availableItems
+	 */
 	private void pickUp(IGame game, int n) {
 		List<IItem> availableItems = game.getLocalItems();
 		pItems.add(game.pickUp(availableItems.get(n)));
 		game.changeOptions();
 	}
 
+	/**
+	 * try to move in chosen direction
+	 * 
+	 * also included consuming of potential battery after moving to new location
+	 * 
+	 * @param game
+	 * @param dir
+	 */
 	private void tryToMove(IGame game, GridDirection dir) {
 		
 		if (game.canGo(dir)) {

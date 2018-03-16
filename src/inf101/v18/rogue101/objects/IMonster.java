@@ -17,6 +17,6 @@ public interface IMonster extends INonPlayer {
 	}
 	
 	default int getDamage() {
-		return getAttack()*10;
+		return getAttack()*5+5;
 	}
 }

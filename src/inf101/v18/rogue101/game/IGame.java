@@ -374,4 +374,9 @@ public interface IGame {
 	 */
 	int getCurrentLevel();
 
+	/**
+	 * Set state game over to stop doturn and prohibit player from doing anything
+	 */
+	void gameOver();
+
 }

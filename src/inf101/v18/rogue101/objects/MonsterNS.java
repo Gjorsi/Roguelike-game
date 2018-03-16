@@ -10,7 +10,11 @@ public class MonsterNS implements IMonster {
 	private int defence;
 	private int size;
 	private boolean north = true;
+	
 	public MonsterNS(IGame game) {
+		/**
+		 * health, attack, defence and size scale with map level (difficulty)
+		 */
 		this.maxHealth = 15*game.getCurrentLevel();
 		this.health = getMaxHealth();
 		this.attack = game.getCurrentLevel();
@@ -20,6 +24,7 @@ public class MonsterNS implements IMonster {
 
 	@Override
 	public void doTurn(IGame game) {
+		// attack player if adjacent, otherwise continue moving north/south or change direction 180 if hindered
 		if (!huntPlayer(game)) {
 			if (north) {
 				if (game.canGo(GridDirection.NORTH)) {
@@ -41,56 +46,44 @@ public class MonsterNS implements IMonster {
 				}
 			}
 		}
-
-		// some movement pattern?
-		
-		
 	}
 
 	@Override
 	public int getAttack() {
-		// TODO Auto-generated method stub
 		return attack;
 	}
 
 	@Override
 	public int getCurrentHealth() {
-		// TODO Auto-generated method stub
 		return health;
 	}
 
 	@Override
 	public int getDefence() {
-		// TODO Auto-generated method stub
 		return defence;
 	}
 
 	public int getMaxHealth() {
-		// TODO Auto-generated method stub
 		return maxHealth;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Primitive Alien";
 	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
 		return size;
 	}
 
 	@Override
 	public int getWeight() {
-		// TODO Auto-generated method stub
 		return size*200;
 	}
 
 	@Override
 	public String getSymbol() {
-		// TODO Auto-generated method stub
 		return "👽";
 	}
 

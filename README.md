@@ -117,8 +117,10 @@ Men det er praktisk at game holder styr på currentLocation og kan gi loc i nabo
 B7 b) 
 
 # Del C
-## Oversikt over designvalg og hva du har gjort
-* ... blah, blah, er implementert i klassen [KurtMario](src/inf101/v18/rogue101/player/KurtMario.java), blah, blah `ITurtleShell` ...
+## Oversikt over designvalg
+* Spillet endte som en slags hybrid inspirert av sci-fi og D&D. 
+* Problemstilling inspirert av Isaac Asimov's "The Last Question": https://www.physics.princeton.edu/ph115/LQ.pdf
+* Skulle gjerne hatt mer tid til å utdype / lage mer "content".
 
 ## Vekt
 * lagt inn getWeight i IItem interface
@@ -133,12 +135,11 @@ B7 b)
 * Player trenger en IItem av type Key for å gå gjennom exit
 
 ## IMonster interface
-* 
+* Felles interface for fiender, inkl metode for å angripe hvis de møter player
+* MonsterNS, MonsterWE, MonsterR
 
 ## IEquipment interface
- 
-## TODO
-* fiks Battery slik at det forsvinner på en bedre måte når brukt
+
  
  
  

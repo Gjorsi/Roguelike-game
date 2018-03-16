@@ -15,12 +15,15 @@ public class Sword implements IEquipment {
 	
 	public Sword(int level) {
 		this.health = getMaxHealth();
+		
+		//randomised attack boost up to current level
 		this.modifyAttack = random.nextInt(level+1);
 		
-		int n = random.nextInt(10);
-		if (n>6 && n<9)
+		// small chance of glowing / burning sword giving higher view range
+		int n = random.nextInt(12);
+		if (n==10)
 			this.modifyViewRange = 1;
-		if (n>8)
+		if (n==11)
 			this.modifyViewRange = 2;
 		
 		if (modifyViewRange == 1)
@@ -44,19 +47,16 @@ public class Sword implements IEquipment {
 
 	@Override
 	public int getMaxHealth() {
-		// TODO Auto-generated method stub
 		return 100;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
@@ -83,19 +83,16 @@ public class Sword implements IEquipment {
 
 	@Override
 	public int modifyDefence() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int modifyViewRange() {
-		// TODO Auto-generated method stub
 		return modifyViewRange;
 	}
 
 	@Override
 	public int modifyMaxHealth() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

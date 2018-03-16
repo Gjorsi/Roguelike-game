@@ -36,6 +36,7 @@ import inf101.v18.rogue101.objects.INonPlayer;
 import inf101.v18.rogue101.objects.IPlayer;
 import inf101.v18.rogue101.objects.Key;
 import inf101.v18.rogue101.objects.MonsterNS;
+import inf101.v18.rogue101.objects.MonsterR;
 import inf101.v18.rogue101.objects.MonsterWE;
 import inf101.v18.rogue101.objects.Sword;
 import inf101.v18.rogue101.objects.Wall;
@@ -70,10 +71,19 @@ public class Game implements IGame {
 	private final ITurtle painter;
 	private final Printer printer;
 	private int numPlayers = 0;
+	
+	//true if game is waiting for user to choose an option in menu
 	private boolean options;
+	
 	private String[] log;
+	
+	//track which map (level) user is on
 	private int currentLevel = 1;
+	
+	// track player location
 	private ILocation playerLoc;
+
+	private boolean gameOver = false;
 
 	public Game(Screen screen, ITurtle painter, Printer printer) {
 		this.painter = painter;
@@ -135,7 +145,7 @@ public class Game implements IGame {
 			log[i] = "";
 		}
 		
-		// give controller instructions
+		// give game-intro and controller instructions
 		String[] instructions = new String[18];
 		instructions[0] = "You find yourself on an alien planet,";
 		instructions[1] = "sent by the humans 👨‍🚀 of earth to ";
@@ -161,6 +171,10 @@ public class Game implements IGame {
 	@Override
 	public void addItem(IItem item) {
 		map.add(currentLocation, item);
+	}
+	
+	public void gameOver() {
+		gameOver = true;
 	}
 
 	@Override
@@ -213,6 +227,8 @@ public class Game implements IGame {
 	 * @return True if the game should wait for more user input
 	 */
 	public boolean doTurn() {
+		if (gameOver) return false;
+		
 		do {
 			
 			if (actors.isEmpty()) {
@@ -370,8 +386,8 @@ public class Game implements IGame {
 					// normally, we expect these things to be removed when they are destroyed, so
 					// this shouldn't happen
 					synchronized (this) {
-						formatDebug("beginTurn(): found and removed leftover destroyed item %s '%s' at %s%n",
-								item.getName(), item.getSymbol(), loc);
+//						formatDebug("beginTurn(): found and removed leftover destroyed item %s '%s' at %s%n",
+//								item.getName(), item.getSymbol(), loc);
 					}
 					li.remove();
 					map.remove(loc, item); // need to do this too, to update item map
@@ -415,6 +431,8 @@ public class Game implements IGame {
 			return new MonsterNS(this);
 		case "W":
 			return new MonsterWE(this);
+		case "D":
+			return new MonsterR(this);
 		case "S":
 			return new Sword(currentLevel);
 		case "B":
@@ -625,8 +643,10 @@ public class Game implements IGame {
 		// only an IPlayer/human can handle keypresses, and only if it's the human's
 		// turn
 		
-		//return true hvis player ikke er ferdig med turn, ellers false
+		// return true if player is not done with turn
 		if (currentActor instanceof IPlayer) {
+			if (currentActor.getCurrentHealth()<= 0)
+				return true;
 			((IPlayer) currentActor).keyPressed(this, code); // do your thing
 			return movePoints > 0;
 		}

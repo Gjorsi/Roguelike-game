@@ -31,16 +31,35 @@ public class Player implements IPlayer {
 	private int health;
 	private int attack;
 	private int defence;
+	
+	// players inventory
 	private List<IItem> pItems;
+	
+	// track number of options when in menu
 	private int nOptions;
+	
+	// possible menus
 	private enum opt {pickUp, drop, attackDir, attackTar, equip};
+	
+	// track current menu type
 	private opt currentOpt;
+	
+	// track valid directions when choosing
 	private List<GridDirection> validDirections;
+	
+	// track targets when in attack menu
 	private List<IItem> possibleTargets;
+	
+	//track chosen direction to attack, until chosing target
 	private int chosenDir;
+	
+	// the distance the player can see in the darkness
 	private int viewRange;
+	
+	// temporary list of equipment used when chosing what to equip
 	private List<IEquipment> equipment;
 	
+	// player's two equipment "slots"
 	private IEquipment armour = null;
 	private IEquipment sword = null;
 	
@@ -49,7 +68,7 @@ public class Player implements IPlayer {
 	 */
 	public Player() {
 		this.health = getMaxHealth();
-		this.name = "Gange-Rolf";
+		this.name = "MultiVac";
 		this.pItems = new ArrayList<>();
 		this.nOptions = 0;
 		this.defence = 10;
@@ -152,6 +171,7 @@ public class Player implements IPlayer {
 	public int handleDamage(IGame game, IItem source, int amount) {
 		health -= amount;
 		if (health <= 0) {
+			game.gameOver();
 			game.displayMessage("Game over!");
 		}
 		showStatus(game);
@@ -435,7 +455,7 @@ public class Player implements IPlayer {
 		s[0] = "Inventory:";
 		
 		if (pItems.size()>0) {
-			for (int i=1;i<pItems.size()+1;i++) {
+			for (int i=1;i<=pItems.size();i++) {
 				s[i] = String.format("%d - %s", i, pItems.get(i-1).getName());
 			}
 		} else {

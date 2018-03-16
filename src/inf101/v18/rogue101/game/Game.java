@@ -27,6 +27,7 @@ import inf101.v18.rogue101.map.MapReader;
 import inf101.v18.rogue101.objects.AncientMachine;
 import inf101.v18.rogue101.objects.Armour;
 import inf101.v18.rogue101.objects.Battery;
+import inf101.v18.rogue101.objects.Crystal;
 import inf101.v18.rogue101.objects.DepletedCrystal;
 import inf101.v18.rogue101.objects.Dust;
 import inf101.v18.rogue101.objects.Exit;
@@ -78,7 +79,7 @@ public class Game implements IGame {
 	private String[] log;
 	
 	//track which map (level) user is on
-	private int currentLevel = 1;
+	private int currentLevel = 5;
 	
 	// track player location
 	private ILocation playerLoc;
@@ -101,7 +102,7 @@ public class Game implements IGame {
 		// inputGrid will be filled with single-character strings indicating what (if
 		// anything)
 		// should be placed at that map square
-		IGrid<String> inputGrid = MapReader.readFile("maps/level1.txt");
+		IGrid<String> inputGrid = MapReader.readFile("maps/level5.txt");
 		if (inputGrid == null) {
 			System.err.println("Map not found – falling back to builtin map");
 			inputGrid = MapReader.readString(Main.BUILTIN_MAP);
@@ -284,11 +285,19 @@ public class Game implements IGame {
 										"and what did they use it for?"};
 								displayOptions(s);
 							}
+							
+							if (item instanceof Crystal) {
+								String[] s = new String[]{"This is it! ",
+										"You've found a pulsating Eternity Crystal.",
+										"It seems these aliens are worshipping it.",
+										"Better get it out of here posthaste!"};
+								displayOptions(s);
+							}
 						}
 						
 						//check if player is on exit location and has a key
 						if (getLocalItems().size() > 0)
-							if (getLocalItems().get(0) instanceof Exit && ((IPlayer)currentActor).useKey())
+							if (getLocalItems().get(0) instanceof Exit && ((IPlayer)currentActor).useKey(this))
 								newLevel(++currentLevel);
 						
 						
@@ -443,6 +452,8 @@ public class Game implements IGame {
 			return new Armour(currentLevel);
 		case "H":
 			return new DepletedCrystal();
+		case "X":
+			return new Crystal();
 		case "T":
 			return new AncientMachine();
 		case " ":
@@ -533,6 +544,8 @@ public class Game implements IGame {
 	}
 
 	public void draw() {
+		if (gameOver)
+			return;
 		map.draw(painter, printer, map.getVisibleLocs(playerLoc, ((Player) getActorAt(playerLoc)).getViewRange()));
 	}
 

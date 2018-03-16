@@ -96,7 +96,7 @@ game.displayOptions lister valgmuligheter og spillet venter nå på input av val
 ## B5 
 * a-d) OK
 * Finner alle neighbours innen distance med nøstede for-loops som sjekker et kvadrat 2*distance+1 sentrert på location, men unngår å telle med location, og unngår å telle ruter utenfor grid
-* Sorterer locations funnet ved en ny metode: GameMap.sortNeighbourhood (insertion sort algoritme)
+* Sorterer locations funnet ved en ny metode: GameMap.sortNeighbourhood ("insertion sort"-algoritme)
 
 ## B5 div:
 * Begrenset maks antall items i player inventory til 9, og maks antall items per location til 9. 
@@ -135,6 +135,11 @@ game.setCurrent parameter IActor actor må allerede være på GameMap'et.
 * Burde kanskje laget egen branch for å gjøre del C (?), siden jeg har måtte kommentere ut for eksempel løsningen på A3
 Bedre Gulrøtter c) for å jobbe videre.
 
+## Game log
+* Ny metode i game: displayOptions()
+* Viser 20 linjer med informasjon
+* Når ny informasjon kommer inn, flyttes nåværende ned og ny info settes inn øvers, over et skille
+
 ## Inventory
 * Gjennomført i løpet av Del B stort sett. 
 * Player kan bære opptil 9 items i tillegg til de som er "equipped"
@@ -161,6 +166,9 @@ sirkulær form.
 * game.newLevel laster neste map (game variabel currentLevel holder styr på hvilket map som skal lastes)
 * kalles når player går på Exit-objekt med key i inventory
 
+## Symbola font
+* Importert Symbola font for å bruke unicode Emojis
+
 ## IMonster interface
 * Felles interface for fiender, inkl metode for å angripe hvis de møter player
 * MonsterNS - standardisert fiende som skalerer med level, beveger seg kun nord / sør
@@ -168,7 +176,14 @@ sirkulær form.
 * MonsterR - standardisert fiende som skalerer med level, beveger seg tilfeldige steg
 
 ## IEquipment interface
+* Armour - kan bedre players defence, maxhealth, og potensielt redusere sikt
+* Sword - kan bedre players attack, og potensielt gi lys som øker sikt
 * Player har 2 "equipment slots" - Armour og Sword
+* Når player tar på Armour som modifiserer maxhealth, endres health for å skalere
+
+## Game Over
+* La til en boolean gameOver i game for å stoppe input og stoppe doTurn når player når 0hp
+* Eneste brukeren kan gjøre ved Game Over er ctrl+Q eller lukke programmet for å avslutte
  
  
  

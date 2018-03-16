@@ -35,5 +35,5 @@ public interface IPlayer extends IActor {
 	 * 
 	 * @return true if player has a key in inventory
 	 */
-	boolean useKey();
+	boolean useKey(IGame game);
 }

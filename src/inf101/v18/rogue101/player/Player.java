@@ -11,6 +11,7 @@ import java.util.function.Predicate;
 import inf101.v18.grid.GridDirection;
 import inf101.v18.rogue101.game.IGame;
 import inf101.v18.rogue101.objects.Battery;
+import inf101.v18.rogue101.objects.Crystal;
 import inf101.v18.rogue101.objects.IEquipment;
 import inf101.v18.rogue101.objects.IItem;
 import inf101.v18.rogue101.objects.IPlayer;
@@ -135,9 +136,23 @@ public class Player implements IPlayer {
 	 * 
 	 * @return true if player has key
 	 */
-	public boolean useKey() {
+	public boolean useKey(IGame game) {	
+		
 		for (IItem item : pItems) {
 			if (item instanceof Key) {
+				
+				// if at level 5, make sure player is not leaving without the crystal.
+				A: if (game.getCurrentLevel() == 5) {
+					for (IItem itemA : pItems) {
+						if (itemA instanceof Crystal) {
+							break A;
+						}
+					}
+					game.displayOptions(new String[] {"You forgot the Crystal!", "Go pick it up before leaving."});
+					return false;
+				}
+			
+			
 				pItems.remove(item);
 				return true;
 			}
@@ -505,6 +520,8 @@ public class Player implements IPlayer {
 		
 		if (availableItems.size() == 1) {
 			pItems.add(game.pickUp(availableItems.get(0)));
+			if (availableItems.get(0) instanceof Crystal)
+				viewRange = 40;
 			
 		} else if (availableItems.size() > 1){
 			
@@ -534,6 +551,8 @@ public class Player implements IPlayer {
 	private void pickUp(IGame game, int n) {
 		List<IItem> availableItems = game.getLocalItems();
 		pItems.add(game.pickUp(availableItems.get(n)));
+		if (availableItems.get(n) instanceof Crystal)
+			viewRange = 40;
 		game.changeOptions();
 	}
 

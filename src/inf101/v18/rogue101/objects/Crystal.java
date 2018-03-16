@@ -2,9 +2,9 @@ package inf101.v18.rogue101.objects;
 
 import inf101.v18.rogue101.game.IGame;
 
-public class DepletedCrystal implements IItem {
+public class Crystal implements IItem {
 
-	public DepletedCrystal() {
+	public Crystal() {
 	}
 
 	@Override
@@ -24,12 +24,12 @@ public class DepletedCrystal implements IItem {
 
 	@Override
 	public String getName() {
-		return "Depleted Crystal";
+		return "Eternity Crystal";
 	}
 
 	@Override
 	public int getSize() {
-		return 2;
+		return 3;
 	}
 
 	@Override

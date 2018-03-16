@@ -30,57 +30,59 @@ Dette prosjektet inneholder [Semesteroppgave 1](SEM-1.md). Du kan også [lese op
 
 # Del A
 ## Svar på spørsmål
-A1 a) ??
+## A1 
+* a) IMapView har tilstand definert av Height, Width, Area, Locations. 
+IGame objekt har tilstand definert av et map av IMapView type, currentLocation, currentActor. 
+Det inngår også i et IGame objekts tilstand hvilken IActor som er currentActor, slik at game vet hvem som skal utføre noe.
+IItem har mange variabler som utgjør tilstanden; name, size, maxHealth, currentHealth, defence, weight, symbol.
+IActor har tilstand som IItem + attack og damage 
+INonPlayer:  som IActor
+IPlayer: som IActor
+* b) IItem er overordnet interface for alle objekter som er på "spillkartet", under IItem i hierarkiet har vi også IActor, og IPlayer og INonPlayer under IActor igjen. IGame objekter tar imot IItem/ILocation og returnerer IItem, ILocation og IActor. IGameMap, som brukes av game er en utvidelse av IMapView.
+* c) Fordi det er noen metoder, altså de som er i IGameMap, som vi ikke vil andre klasser enn Game skal ha tilgang til (metoder for å endre utseende / innholdet av kartet)
+* d) INonPlayer skal styres av spillet etter forutbestemte regler. IPlayer skal styres av user med tastetrykk, og må derfor ha helt andre metoder.
 
-A1 b) IItem er overordnet interface for alle objekter som er på "spillkartet", under IItem i hierarkiet har vi også IActor, og IPlayer og INonPlayer under IActor igjen. IGame klasser tar imot IItem/ILocation og returnerer IItem, ILocation og IActor. 
-
-A1 c) Fordi det er noen metoder, altså de som er i IGameMap, som vi ikke vil andre classes enn Game skal ha tilgang til (?)
-
-A1 d) INonPlayer skal styres av spillet etter forutbestemte regler. IPlayer skal styres av user med tastetrykk, og må derfor ha helt andre metoder.
-
-A2 e) ??
-
-A2 f) Kaninen vet ikke hvor den er, ~~men på en eller annen magisk måte~~ men siden Game har kontroll på det, kan den spørre "game" om "localitems" og finner det den kan spise i området.
+## A2 
+* e) Stort sett, ja.
+* f) Kaninen vet ikke hvor den er, ~~men på en eller annen magisk måte~~ men siden Game har kontroll på det, kan den spørre "game" om "localitems" og finner det den kan spise i området.
 Den lager også en liste over mulige moves ved å "spørre" om cango i 4 retninger. Hvis ikke mulighetene er 0, så velger den en tilfeldig retning.
-
-A2 g) Game styrer spillet slik at det er kun en Rabbit som har sin turn av gangen, og hvilken Rabbit dette er ligger i currentActor, Game har også
+* g) Game styrer spillet slik at det er kun en Rabbit som har sin turn av gangen, og hvilken Rabbit dette er ligger i currentActor, Game har også
 currentLocation slik at vi vet hvor currentActor er når den "spør"
 
-A3 a) Ved å øke Rabbit maxHealth, lever de lenger, og dermed får de spist opp fler gulrøtter før de dør ut
+## A3 
+* a) Ved å øke Rabbit maxHealth, lever de lenger, og dermed får de spist opp fler gulrøtter før de dør ut
+* b) IllegalMoveException ved oppstart
+* c) Det ser ut til at første retning som velges er EAST, så de beveger seg bare generelt østover og blir ikke mer effektive.
+* d) Fikset så Rabbits søker etter Carrots i possibleMoves. Laget også en metode i Game for å finne items på en bestemt location: getItems(ILocation loc)
+* e) Laget en getPossibleMoves metode i Game
 
-A3 b) IllegalMoveException ved oppstart
-
-A3 c) Det ser ut til at første retning som velges er EAST, så de beveger seg bare generelt østover og blir ikke mer effektive.
-
-A3 d) Fikset så Rabbits søker etter Carrots i possibleMoves, også laget en getPossibleMoves metode i Game. Laget også en metode i Game for å finne items på en bestemt location: getItems(ILocation loc)
-
-Bedre Gulrøtter:
-a) Selv om gulrøttene ikke forsvinner når helsen blir satt til 0, så har de ingen "næring" til kaninene. En Rabbit "konsumerer" en Carrots hp for å få liv selv.
-
-b) Det virker ikke. Items utfører ikke doTurn, det er det kun Actors som gjør. For å få til dette må vi gjøre om Carrots til Actors. (implements IActor)
+## Bedre Gulrøtter:
+* a) Selv om gulrøttene ikke forsvinner når helsen blir satt til 0, så har de ingen "næring" til kaninene. En Rabbit "konsumerer" en Carrots hp for å få liv selv.
+* b) Det virker ikke. IItems utfører ikke doTurn, det er det kun Actors som gjør. For å få til dette må vi gjøre om Carrots til Actors. (implements IActor)
+* c) OK - lagt inn i game.doTurn()
 
 # Del B
 ## Svar på spørsmål
 
-B1 a-d) OK - den nye klassen heter Mushroom (i examples-pakken)
+## B1
+* a-d) OK - den nye klassen heter Mushroom (i examples-pakken)
 
-B2 a-e) OK
-
-B2 f) ~~Får ikke kjørt tester på Player class pga "internal graphics not initialized" bug.~~
+## B2 
+* a-e) OK
+* f) ~~Får ikke kjørt tester på Player class pga "internal graphics not initialized" bug.~~
 * bug fikset, nå er alt OK
 
-B3 a-c) Implementert, GameMapTest legger inn 20 tilfeldige items og tester at alle ligger i rekkefølge.
+## B3
+* a-c) Implementert, GameMapTest legger inn 20 tilfeldige items og tester at alle ligger i rekkefølge.
 
-B4 a) Implementert pickUp og drop henholdsvis med tastene 'E' og 'C'
-
-B4 b) OK
-
-B4 c) Implementert pItems liste i Player class, holder oversikt over items som er plukket opp.
-
-B4 d) Har laget en displayOptions metode i game som kan vise et String array opptil 19 linjer. 
+## B4
+* a) Implementert pickUp og drop henholdsvis med tastene 'E' og 'C'
+* b) OK
+* c) Implementert pItems liste i Player class, holder oversikt over items som er plukket opp.
+* d) Har laget en displayOptions metode i game som kan vise et String array opptil 19 linjer. 
 Denne brukes av Player.displayInventory (tast 'I') til å vise innholdet av pItems-listen
 
-B4 div: 
+## B4 div: 
 * Player har nå 2 mulige "states" ved keypress, enten er player i menu eller normal play, som indikeres av en boolean i game: options
 * Hvis game.getOptions er false, behandles keypress som normalt, slik at vi kan bevege oss i en retning eller trykke E = pickup, C = drop, I = inventory
 * Hvis game.getOptions er true, kreves input av type digit. 
@@ -91,36 +93,42 @@ Hvis det er flere mulige, blir game.options satt til true og currentOpt satt til
 game.displayOptions lister valgmuligheter og spillet venter nå på input av valg
 * Når input av valg er akseptert, kalles drop eller pickUp i Player, og game.options blir satt til false, slik at spillet fortsetter som normalt.
 
-B5 a-d) OK
+## B5 
+* a-d) OK
 * Finner alle neighbours innen distance med nøstede for-loops som sjekker et kvadrat 2*distance+1 sentrert på location, men unngår å telle med location, og unngår å telle ruter utenfor grid
 * Sorterer locations funnet ved en ny metode: GameMap.sortNeighbourhood (insertion sort algoritme)
 
-B5 div:
+## B5 div:
 * Begrenset maks antall items i player inventory til 9, og maks antall items per location til 9. 
 Dette for å unngå videre problemer med meny-valg fra 1-9
 
-B6 a) OK
+## B6 
+* a) OK
 * Setter IActor defence til 10 eller mer i stedet for å legge til 10 på alle defence i attack metoden
-
-B6 b) OK
+* b) OK
 * Rabbits ser først etter player i GridDirection.FOUR_DIRECTIONS, og angriper hvis den finner player, ellers normal turn
-
-B6 c) ~~Nesten~~ OK
-* Player kan trykke X for attack, får valg av retning hvis det er mål i mer enn 1 retning - når retning er valgt, kommer valg av target hvis det er mer enn 1.
-~~I andre meny (velge target) kommer ikke game.displayOptions opp - vet ikke helt hvorfor~~
+* c) ~~Nesten~~ OK
+* Player kan trykke X for attack, får valg av retning hvis det er mål i mer enn 1 retning - når retning er valgt, 
+kommer valg av target hvis det er mer enn 1.
+* ~~I andre meny (velge target) kommer ikke game.displayOptions opp - vet ikke helt hvorfor~~
 * ~~Menyvalgene kan leses i console, så attack funksjon kan brukes som tiltenkt~~
-* Fikset feil som gjorde at andre meny (for å velge target) ikke ble vist i game.displayOptions.
+* Fikset feil som gjorde at andre meny (for å velge target) ikke ble vist i game.displayOptions().
 
-B7 a) Jeg har ikke benyttet meg av noen andre retninger enn GridDirections.FOUR_DIRECTIONS, eller bruk av grader, så mye er likt.
+## B7 
+* a) Jeg har ikke benyttet meg av noen andre retninger enn GridDirections.FOUR_DIRECTIONS, eller bruk av grader, så mye er likt.
 Men det er praktisk at game holder styr på currentLocation og kan gi loc i naboceller i retning dir.
-
-B7 b) 
+* b) 
 
 # Del C
 ## Oversikt over designvalg
 * Spillet endte som en slags hybrid inspirert av sci-fi og D&D. 
 * Problemstilling inspirert av Isaac Asimov's "The Last Question": https://www.physics.princeton.edu/ph115/LQ.pdf
 * Skulle gjerne hatt mer tid til å utdype / lage mer "content".
+* Burde kanskje laget egen branch for å gjøre del C (?), siden jeg har måtte kommentere ut for eksempel løsningen på A3
+Bedre Gulrøtter c) for å jobbe videre.
+
+## "Fog of war" / mørke
+* 
 
 ## Vekt
 * lagt inn getWeight i IItem interface

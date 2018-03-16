@@ -149,8 +149,8 @@ public class Game implements IGame {
 		String[] instructions = new String[18];
 		instructions[0] = "You find yourself on an alien planet,";
 		instructions[1] = "sent by the humans 👨‍🚀 of earth to ";
-		instructions[2] = "find a cure for entropy.";
-		instructions[3] = "";
+		instructions[2] = "find an ancient device, possibly";
+		instructions[3] = "able to reverse entropy.";
 		instructions[4] = "The humans believe this planet was ";
 		instructions[5] = "once inhabited by an ancient race, ";
 		instructions[6] = "which was way ahead of our technological";

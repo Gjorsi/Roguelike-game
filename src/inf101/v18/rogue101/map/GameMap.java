@@ -272,7 +272,7 @@ public class GameMap implements IGameMap {
 		Iterator<ILocation> it = visible.iterator();
 		
 		while (it.hasNext()) {
-			if (it.next().geometricDistanceTo(loc) > dist)
+			if (it.next().geometricDistanceTo(loc) > dist+0.5)
 				it.remove();
 		}
 		

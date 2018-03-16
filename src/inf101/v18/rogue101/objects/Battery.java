@@ -7,49 +7,48 @@ public class Battery implements IItem {
 	private int size;
 	private int health = getMaxHealth();
 	
+	/**
+	 * An item which can be consumed by player to regain health
+	 * Size and health given scales with level
+	 * 
+	 * @param level used to scale health
+	 */
 	public Battery(int level) {
 		this.size = level;
 	}
 
 	@Override
 	public int getCurrentHealth() {
-		// TODO Auto-generated method stub
 		return health;
 	}
 
 	@Override
 	public int getDefence() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getMaxHealth() {
-		// TODO Auto-generated method stub
 		return 10;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Battery";
 	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
 		return size;
 	}
 
 	@Override
 	public int getWeight() {
-		// TODO Auto-generated method stub
 		return size*4;
 	}
 
 	@Override
 	public String getSymbol() {
-		// TODO Auto-generated method stub
 		return "🔋";
 	}
 

@@ -25,8 +25,8 @@ Dette prosjektet inneholder [Semesteroppgave 1](SEM-1.md). Du kan også [lese op
 * Levert av:   Carl August Gjørsvik (cgj008)
 * Del A: [X] helt ferdig, [ ] delvis ferdig
 * Del B: [X] helt ferdig, [ ] delvis ferdig
-* Del C: [ ] helt ferdig, [X] delvis ferdig
-* [ ] hele semesteroppgaven er ferdig og klar til retting!
+* Del C: [X] helt ferdig, [ ] delvis ferdig
+* [X] hele semesteroppgaven er ferdig og klar til retting!
 
 # Del A
 ## Svar på spørsmål
@@ -128,6 +128,8 @@ game.setCurrent parameter IActor actor må allerede være på GameMap'et.
 
 
 # Del C
+## For å velge map gitt i oppgaven, se game konstruktør linje 105 og sett level1.txt
+## For å spille story mode, sett startlevel.txt
 ## Oversikt over designvalg
 * Spillet endte som en slags hybrid inspirert av sci-fi og D&D. 
 * Problemstilling inspirert av Isaac Asimov's "The Last Question": https://www.physics.princeton.edu/ph115/LQ.pdf

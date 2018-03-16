@@ -26,6 +26,6 @@ public interface IMonster extends INonPlayer {
 	 * Standardised damage based on attack (which scales with level for most if not all monsters)
 	 */
 	default int getDamage() {
-		return getAttack()*5+5;
+		return getAttack()*4+3;
 	}
 }

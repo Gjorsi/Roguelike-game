@@ -72,7 +72,7 @@ public class Player implements IPlayer {
 		this.name = "MultiVac";
 		this.pItems = new ArrayList<>();
 		this.nOptions = 0;
-		this.defence = 10;
+		this.defence = 11;
 		this.attack = 1;
 		this.validDirections = new ArrayList<>();
 		this.possibleTargets = new ArrayList<>();

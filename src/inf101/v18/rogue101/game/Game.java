@@ -79,7 +79,7 @@ public class Game implements IGame {
 	private String[] log;
 	
 	//track which map (level) user is on
-	private int currentLevel = 5;
+	private int currentLevel = 1;
 	
 	// track player location
 	private ILocation playerLoc;
@@ -102,7 +102,7 @@ public class Game implements IGame {
 		// inputGrid will be filled with single-character strings indicating what (if
 		// anything)
 		// should be placed at that map square
-		IGrid<String> inputGrid = MapReader.readFile("maps/level5.txt");
+		IGrid<String> inputGrid = MapReader.readFile("maps/startlevel.txt");
 		if (inputGrid == null) {
 			System.err.println("Map not found – falling back to builtin map");
 			inputGrid = MapReader.readString(Main.BUILTIN_MAP);

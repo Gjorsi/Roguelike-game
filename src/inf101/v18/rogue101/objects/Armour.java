@@ -17,19 +17,19 @@ public class Armour implements IEquipment {
 	public Armour(int level) {
 		this.name = "Fancy Robe";
 		this.health = getMaxHealth();
-		this.modifyDefence = random.nextInt(level+2);
+		this.modifyDefence = random.nextInt(level+3);
 		
 		if (modifyDefence > 5) {
-			name = "Plate Mail";
+			this.name = "Plate Mail";
 		} else if (modifyDefence > 3) {
-			name = "Chain Mail";
+			this.name = "Chain Mail";
 		} else if (modifyDefence > 1) {
-			name = "Leather Armour";
+			this.name = "Leather Armour";
 		}
 		
 		if (random.nextBoolean()) {
 			modifyMaxHealth = random.nextInt(level*20)+10;
-			name += " of Health";
+			this.name += " of Health";
 		} else {
 			modifyMaxHealth = 0;
 		}
@@ -43,43 +43,36 @@ public class Armour implements IEquipment {
 
 	@Override
 	public int getCurrentHealth() {
-		// TODO Auto-generated method stub
 		return health;
 	}
 
 	@Override
 	public int getDefence() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getMaxHealth() {
-		// TODO Auto-generated method stub
 		return 100;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return name;
+		return this.name;
 	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public int getWeight() {
-		// TODO Auto-generated method stub
-		return modifyDefence*10+30;
+		return modifyDefence*5+30;
 	}
 
 	@Override
 	public String getSymbol() {
-		// TODO Auto-generated method stub
 		return "🛡";
 	}
 
@@ -91,25 +84,21 @@ public class Armour implements IEquipment {
 
 	@Override
 	public int modifyAttack() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int modifyDefence() {
-		// TODO Auto-generated method stub
 		return modifyDefence;
 	}
 
 	@Override
 	public int modifyViewRange() {
-		// TODO Auto-generated method stub
 		return modifyViewRange;
 	}
 
 	@Override
 	public int modifyMaxHealth() {
-		// TODO Auto-generated method stub
 		return modifyMaxHealth;
 	}
 

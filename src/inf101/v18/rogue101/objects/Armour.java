@@ -12,10 +12,10 @@ public class Armour implements IEquipment {
 	private int modifyDefence;
 	private int modifyViewRange = 0;
 	private int modifyMaxHealth;
-	private String name = "";
+	private String name;
 	
 	public Armour(int level) {
-		
+		this.name = "Fancy Robe";
 		this.health = getMaxHealth();
 		this.modifyDefence = random.nextInt(level+2);
 		
@@ -25,8 +25,6 @@ public class Armour implements IEquipment {
 			name = "Chain Mail";
 		} else if (modifyDefence > 1) {
 			name = "Leather Armour";
-		} else {
-			name = "Fancy Robe";
 		}
 		
 		if (random.nextBoolean()) {
@@ -76,7 +74,7 @@ public class Armour implements IEquipment {
 	@Override
 	public int getWeight() {
 		// TODO Auto-generated method stub
-		return modifyDefence*10+40;
+		return modifyDefence*10+30;
 	}
 
 	@Override

@@ -24,8 +24,10 @@ import inf101.v18.rogue101.map.GameMap;
 import inf101.v18.rogue101.map.IGameMap;
 import inf101.v18.rogue101.map.IMapView;
 import inf101.v18.rogue101.map.MapReader;
+import inf101.v18.rogue101.objects.AncientMachine;
 import inf101.v18.rogue101.objects.Armour;
 import inf101.v18.rogue101.objects.Battery;
+import inf101.v18.rogue101.objects.DepletedCrystal;
 import inf101.v18.rogue101.objects.Dust;
 import inf101.v18.rogue101.objects.Exit;
 import inf101.v18.rogue101.objects.IActor;
@@ -134,15 +136,25 @@ public class Game implements IGame {
 		}
 		
 		// give controller instructions
-		String[] instructions = new String[8];
-		instructions[0] = "Controls:";
-		instructions[1] = "Arrows = move";
-		instructions[2] = "I = show inventory";
-		instructions[3] = "C = drop item";
-		instructions[4] = "P = pick up item";
-		instructions[5] = "X = attack";
-		instructions[6] = "E = equip an item";
-		instructions[7] = "Find a key and use it to advance.";
+		String[] instructions = new String[18];
+		instructions[0] = "You find yourself on an alien planet,";
+		instructions[1] = "sent by the humans 👨‍🚀 of earth to ";
+		instructions[2] = "find a cure for entropy.";
+		instructions[3] = "";
+		instructions[4] = "The humans believe this planet was ";
+		instructions[5] = "once inhabited by an ancient race, ";
+		instructions[6] = "which was way ahead of our technological";
+		instructions[7] = "level. But now, there are only remnants,";
+		instructions[8] = "and a primitive civilization.";
+		instructions[9] = "";
+		instructions[10] = "Controls:";
+		instructions[11] = "Arrows = move";
+		instructions[12] = "I = show inventory";
+		instructions[13] = "C = drop item";
+		instructions[14] = "P = pick up item";
+		instructions[15] = "X = attack";
+		instructions[16] = "E = equip an item";
+		instructions[17] = "Find a key and use it to advance.";
 		displayOptions(instructions);
 	}
 	
@@ -243,10 +255,24 @@ public class Game implements IGame {
 					} else {
 						
 						playerLoc = currentLocation;
+						
+						for (IItem item : getLocalItems()) {
+							if (item instanceof DepletedCrystal) {
+								String[] s = new String[]{"You've found an Eternity Crystal, ",
+										"but it seems to be depleted.. somehow.",
+										"I wonder how these aliens could use",
+										"up all that energy?",
+										"and what did they use it for?"};
+								displayOptions(s);
+							}
+						}
+						
 						//check if player is on exit location and has a key
 						if (getLocalItems().size() > 0)
 							if (getLocalItems().get(0) instanceof Exit && ((IPlayer)currentActor).useKey())
 								newLevel(++currentLevel);
+						
+						
 						
 						// For the human player, we need to wait for input, so we just return.
 						// Further keypresses will cause keyPressed() to be called, and once the human
@@ -395,6 +421,10 @@ public class Game implements IGame {
 			return new Battery(currentLevel);
 		case "A":
 			return new Armour(currentLevel);
+		case "H":
+			return new DepletedCrystal();
+		case "T":
+			return new AncientMachine();
 		case " ":
 			return null;
 		default:

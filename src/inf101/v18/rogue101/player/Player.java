@@ -74,7 +74,7 @@ public class Player implements IPlayer {
 	 */
 	@Override
 	public int getDamage() {
-		return getAttack()*5;
+		return getAttack()*8;
 	}
 
 	/* (non-Javadoc)

@@ -73,7 +73,7 @@ public class MonsterNS implements IMonster {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "Some monster";
+		return "Primitive Alien";
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class MonsterNS implements IMonster {
 	@Override
 	public String getSymbol() {
 		// TODO Auto-generated method stub
-		return "👾";
+		return "👽";
 	}
 
 	@Override
